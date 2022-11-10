@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/basic">
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<title>코인페이지~</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Easy-Pick CoinMarket</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href=@{v1/market/all}>코인상세정보</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href=@{/graph}>코인그래프</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+
+<!--코인고르기 -->
+	<select id="upbitAll">
+		<option value="">코인이름을 골라주세요</option>
+		<option th:each="items: ${model}"
+			th:if="${#strings.contains(items.market,'KRW')}"
+			th:value="${items.market}" th:text="${items.korean_name}"></option>
+
+	</select>
+	<button id="select">선택</button>
+	<table class="table" id="dataMarket">
+		<thead>
+			<tr>
+				<th scope="col">코인이름</th>
+				<th scope="col">현재가(원)</th>
+				<th scope="col">누적거래대금(원)</th>
+				<th scope="col">누적거래대금(원,1일)</th>
+				<th scope="col">누적거래량</th>
+				<th scope="col">누적거래량</th>
+				<th scope="col">현재거래량</th>
+			</tr>
+		</thead>
+	</table>
+	<script>
+/*<![CDATA[*/
+// 기능 미구현목록
+// 1. 전체 목록 나오게끔 해야함.
+// 2. 검색기능 (서치하여 버튼을 누르면 해당코인이 나올수 있도록)
+// 3. 한국 마켓만 지원 가능 
+// 4. 봉차트 그래프 따오기
+$("#select").click(function(){
+    var market ;
+    var marketId = document.getElementById("upbitAll");
+    // 전체마켓을 담는 아이를 확인
+    var marketAll = "";
+    var marketEngName = marketId.value;
+   	console.log(marketEngName)
+		$.ajax({
+			type : "GET",
+			url : "https://api.upbit.com/v1/ticker?markets="+marketEngName,
+			dataType : 'json',
+			success : function(res){
+				var resJson = res[0];
+				let marketName = resJson.market;
+				let marketPrice = resJson.opening_price.toLocaleString('ko-kr');
+				let accTradePrice = Math.floor(resJson.acc_trade_price).toLocaleString('ko-kr');
+				let accTradePriceOneDay = Math.floor(resJson.acc_trade_price_24h).toLocaleString('ko-kr');
+				let accTradeVolume = Math.floor(resJson.acc_trade_volume).toLocaleString('ko-kr');
+				let accTradeVolumeOneDay = Math.floor(resJson.acc_trade_volume_24h).toLocaleString('ko-kr');
+				let tradeVolume = Math.floor(resJson.trade_volume).toLocaleString('ko-kr');
+				html = "";
+				html += 
+				  "<tbody><tr><td>" + marketName + "</td>"
+				 	+ "<td>" + marketPrice + "</td>"
+					+ "<td>" + accTradePrice + "</td>"
+					+ "<td>" + accTradePriceOneDay + "</td>"
+					+ "<td>" + accTradeVolume + "</td>"
+					+ "<td>" + accTradeVolumeOneDay + "</td>"
+					+ "<td>" + tradeVolume + "</td></tr></tbody>"
+				 $("#dataMarket").append(html)
+			}
+		});
+});
+
+
+
+
+
+
+
+/*]]>*/
+</script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+		crossorigin="anonymous"></script>
+</body>
+</html>
+
+

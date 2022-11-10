@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<!-- CSS only -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>	
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<title>Insert title here</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Easy-Pick CoinMarket</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+				aria-controls="navbarColor01" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link"
+						th:href=@{v1/market/all}>코인상세정보</a></li>
+					<li class="nav-item"><a class="nav-link" th:href=@{/graph}>코인그래프</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+				</ul>
+				<form class="d-flex">
+					<input class="form-control me-2" type="search" placeholder="Search"
+						aria-label="Search">
+					<button class="btn btn-outline-light" type="submit">Search</button>
+				</form>
+			</div>
+		</div>
+	</nav>
+	<h1>그래프 그릴꺼임</h1>
+
+
+	<select id="upbitAll">
+		<option value="">코인을 골라주세요</option>
+		<option id='coinName' th:each="items: ${model}"
+			th:if="${#strings.contains(items.market,'KRW')}"
+			th:value="${items.market}" th:text="${items.korean_name}"></option>
+	</select>
+
+	
+	<div class = "buttonList">
+		<button class = "minGraph" value = "minGraph">분봉그래프</button>
+		<button class = "dayGraph" value = "dayGraph">일봉그래프</button>
+		<button class = "weekGraph" value = "weekGraph">주봉그래프</button>
+		<button class = "monthGraph" value = "monthGraph">월봉그래프</button>
+	</div>
+	
+	<select id="minselect" >분을 선택해주세요</select>
+
+	<div style = "width: 80%; height: 100%;" id = "chart_div">
+		
+	</div>
+
+
+<script>
+	/*<![CDATA[*/	
+
+$(document).ready(function () {
+    // 마켓이름으로 그래프 그리기
+    // 분봉 차트 먼저
+
+
+
+    //클릭횟수로 그래프 그릴때 하기.
+    //클릭횟수로 그래프 그릴때 하기.
+    var click = 0;
+   
+    // 분봉의 갯수 ex) 3이면 3개.
+    var countNum = 100; 
+    
+
+    $('.minGraph').click(function () {
+        click += 1;
+
+        var marketSelect = $('select').val();
+        var marketKoreaName = $('select').val();
+        console.log(marketKoreaName);
+        console.log(marketSelect);
+        if (click == 1) {
+            html = '';
+            html += '<option value = "1">1분봉</option>'
+                + '<option value = "3">3분봉</option>'
+                + '<option value = "5">5분봉</option>'
+                + '<option value = "10">10분봉</option>'
+                + '<option value = "15">15분봉</option>'
+                + '<option value = "30">30분봉</option>'
+                + '<option value = "60">60분봉</option>'
+                + '<option value = "240">240분봉</option>'
+            $("#minselect").append(html);
+        }
+        var minselect = $("#minselect").val();
+        console.log(minselect);
+        $.ajax({
+            type: "GET",
+            url: ("https://api.upbit.com/v1/candles/minutes/" + minselect + "?market=" + marketSelect + "&to=" + "&count="+ countNum),
+            dataType: 'json',
+            success: function (res) {
+            	var candleDateTime= [];
+            	var openingPrice = [];
+            	var highPrice = [];
+            	var lowPrice = [];
+            	var tradePrice = [];
+            	for(let i=0; i<countNum; i++){
+            		candleDateTime.unshift(res[i].candle_date_time_kst);
+            	    openingPrice.unshift(res[i].opening_price); //시가
+                    highPrice.unshift(res[i].high_price); //고가
+                    lowPrice.unshift(res[i].low_price); //저가
+                    tradePrice.unshift(res[i].trade_price); // 종가 */
+            	}
+ 	            google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                	var a = []
+                	for(i=0; i<countNum; i++){
+                		var b = [candleDateTime[i],highPrice[i],openingPrice[i],tradePrice[i],lowPrice[i]] 
+ 						a.push(b)	               
+                	}
+					console.log(a)	                	
+                    var data = google.visualization.arrayToDataTable(a, true);
+
+                    var options = {
+                        legend: 'none',
+                        bar: { groupWidth: '80%' },
+                        candlestick: {
+                            fallingColor: { strokeWidth: 0, fill: 'blue' }, // red
+                            risingColor: { strokeWidth: 0, fill: 'red' }   // green
+                          }
+                    };
+
+                    var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+
+                    chart.draw(data, options);
+                } 
+
+            }
+        });
+
+    })
+    
+     $('.dayGraph').click(function () {
+        click += 1;
+        var marketSelect = $('select').val();
+        var marketKoreaName = $('select').val();
+        $.ajax({
+            type: "GET",
+            url: ("https://api.upbit.com/v1/candles/days?market="+marketSelect+"&count="+countNum+"&convertingPriceUnit=KRW"),
+            dataType: 'json',
+            success: function (res) {
+            	var candleDateTime= [];
+            	var openingPrice = [];
+            	var highPrice = [];
+            	var lowPrice = [];
+            	var tradePrice = [];
+            	
+        		
+            	for(let i=0; i<countNum; i++){
+            		candleDateTime.unshift(res[i].candle_date_time_kst);
+            	    openingPrice.unshift(res[i].opening_price); //시가
+                    highPrice.unshift(res[i].high_price); //고가
+                    lowPrice.unshift(res[i].low_price); //저가
+                    tradePrice.unshift(res[i].trade_price); // 종가 */
+            	}
+ 	            google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                	var a = []
+                	for(i=0; i<countNum; i++){
+                		var b = [candleDateTime[i],highPrice[i],openingPrice[i],tradePrice[i],lowPrice[i]] 
+ 						a.push(b)	               
+                	}
+					console.log(a)	                	
+                    var data = google.visualization.arrayToDataTable(a, true);
+
+                    var options = {
+                        legend: 'none',
+                        bar: { groupWidth: '80%' },
+                        candlestick: {
+                            fallingColor: { strokeWidth: 0, fill: 'blue' }, // red
+                            risingColor: { strokeWidth: 0, fill: 'red' }   // green
+                          }
+                    };
+
+                    var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+
+                    chart.draw(data, options);
+                } 
+
+            }
+        });
+
+    })
+});
+	/*]]>*/
+	
+	
+	
+	
+	
+		
+	</script>
+
+
+
+	<!-- JavaScript Bundle with Popper -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+		crossorigin="anonymous"></script>
+</body>
+</html>
