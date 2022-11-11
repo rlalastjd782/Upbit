@@ -89,26 +89,35 @@ $(document).ready(function () {
     
 
     $('.minGraph').click(function () {
-        click += 1;
-
+        //클릭 횟수 초기화
+        click = 0;
+    	click += 1;
+     	var minselect = $("#minselect").val();
+        if (minselect == null ){
+        	minselect = 1;
+        }
+        console.log(minselect);       
         var marketSelect = $('select').val();
         var marketKoreaName = $('select').val();
-        console.log(marketKoreaName);
-        console.log(marketSelect);
-        if (click == 1) {
-            html = '';
-            html += '<option value = "1">1분봉</option>'
-                + '<option value = "3">3분봉</option>'
-                + '<option value = "5">5분봉</option>'
-                + '<option value = "10">10분봉</option>'
-                + '<option value = "15">15분봉</option>'
-                + '<option value = "30">30분봉</option>'
-                + '<option value = "60">60분봉</option>'
-                + '<option value = "240">240분봉</option>'
-            $("#minselect").append(html);
+        if (minselect == 1) {
+        	if(click == 1){
+	            html = '';
+	            html += '<option value = "1">1분봉</option>'
+	                + '<option value = "3">3분봉</option>'
+	                + '<option value = "5">5분봉</option>'
+	                + '<option value = "10">10분봉</option>'
+	                + '<option value = "15">15분봉</option>'
+	                + '<option value = "30">30분봉</option>'
+	                + '<option value = "60">60분봉</option>'
+	                + '<option value = "240">240분봉</option>'
+	            $("#minselect").append(html);
+	        }
         }
-        var minselect = $("#minselect").val();
-        console.log(minselect);
+        
+        
+   
+	
+        
         $.ajax({
             type: "GET",
             url: ("https://api.upbit.com/v1/candles/minutes/" + minselect + "?market=" + marketSelect + "&to=" + "&count="+ countNum),
@@ -295,7 +304,7 @@ $(document).ready(function () {
                 	}
 					console.log(a)	                	
                     var data = google.visualization.arrayToDataTable(a, true);
-
+	
                     var options = {
                         legend: 'none',
                         bar: { groupWidth: '80%' },
@@ -303,6 +312,8 @@ $(document).ready(function () {
                             fallingColor: { strokeWidth: 0, fill: 'blue' }, // red
                             risingColor: { strokeWidth: 0, fill: 'red' }   // green
                           }
+
+
                     };
 
                     var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
