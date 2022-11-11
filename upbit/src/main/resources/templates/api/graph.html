@@ -260,6 +260,59 @@ $(document).ready(function () {
             }
         });
 	});
+    $('.monthGraph').click(function () {
+        click += 1;
+        var marketSelect = $('select').val();
+        var marketKoreaName = $('select').val();
+        var monthCountNum = 30;
+        $.ajax({
+            type: "GET",
+            url: ("https://api.upbit.com/v1/candles/months?market="+marketSelect+"&count="+monthCountNum),
+            
+            dataType: 'json',
+            success: function (res) {
+            	var candleDateTime= [];
+            	var openingPrice = [];
+            	var highPrice = [];
+            	var lowPrice = [];
+            	var tradePrice = [];
+            	
+        		
+            	for(let i=0; i<monthCountNum; i++){
+            		candleDateTime.unshift(res[i].candle_date_time_kst);
+            	    openingPrice.unshift(res[i].opening_price); //시가
+                    highPrice.unshift(res[i].high_price); //고가
+                    lowPrice.unshift(res[i].low_price); //저가
+                    tradePrice.unshift(res[i].trade_price); // 종가 */
+            	}
+ 	            google.charts.load('current', { 'packages': ['corechart'] });
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                	var a = []
+                	for(i=0; i<monthCountNum; i++){
+                		var b = [candleDateTime[i],highPrice[i],openingPrice[i],tradePrice[i],lowPrice[i]] 
+ 						a.push(b)	               
+                	}
+					console.log(a)	                	
+                    var data = google.visualization.arrayToDataTable(a, true);
+
+                    var options = {
+                        legend: 'none',
+                        bar: { groupWidth: '80%' },
+                        candlestick: {
+                            fallingColor: { strokeWidth: 0, fill: 'blue' }, // red
+                            risingColor: { strokeWidth: 0, fill: 'red' }   // green
+                          }
+                    };
+
+                    var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+
+                    chart.draw(data, options);
+                } 
+
+            }
+        });
+	});
     
 });    
     
