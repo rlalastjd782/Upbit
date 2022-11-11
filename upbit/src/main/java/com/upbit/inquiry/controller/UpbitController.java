@@ -39,16 +39,16 @@ public class UpbitController {
 			return "api/analysis";
 			
 		}
+		@GetMapping(value = "/ticker")
+		public String ticker(String all,Model model) {
+			model.addAttribute("model",upbitService.getUpbitMarket(all));
+			return "api/ticker";
+			
+		}
 
 		
-		
-		//필요없음
-		// 특정 티커 조회
-		@GetMapping(value = "v1/upbit/{ticker}")
-		public String getUpbitTickerPrice(@PathVariable String ticker, Model model){
-			model.addAttribute("upbitTickerPrice",  upbitService.getUpbitPrice(ticker));
-			return "api/ticker";
-		}
+	
+
 		//코인리스트를 가져오기 위해 만들어 놓음
 		@GetMapping(value = "v1/market/{all}")
 		public String getUpbitMaretkAll(@PathVariable String all, Model model){
