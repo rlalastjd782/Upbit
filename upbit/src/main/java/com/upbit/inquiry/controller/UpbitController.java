@@ -33,6 +33,15 @@ public class UpbitController {
 			
 		}
 		
+		@GetMapping(value = "/analysis")
+		public String analysisPage(String all,Model model) {
+			model.addAttribute("model",upbitService.getUpbitMarket(all));
+			return "api/analysis";
+			
+		}
+
+		
+		
 		//필요없음
 		// 특정 티커 조회
 		@GetMapping(value = "v1/upbit/{ticker}")
@@ -48,8 +57,7 @@ public class UpbitController {
 		}
 
 		
-		
-		
+
 
 	
 	
