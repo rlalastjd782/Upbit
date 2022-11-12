@@ -1,3 +1,5 @@
+
+
 package com.upbit.inquiry.controller;
 
 import org.springframework.stereotype.Controller;
@@ -17,14 +19,14 @@ public class UpbitController {
 
 	
 		private final UpbitServiceImpl upbitService;
-		//¸ÞÀÎÆäÀÌÁö
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		@GetMapping(value = "/")
 		public String mainPage() {
 			return "api/main";
 			
 		}
-		//¸ÞÀÎÆäÀÌÁö
-		//¿©±â¿¡ ¼­ºñ½ºÀÓÇÃ ¹Þ¾Æ¿Ã¼öÀÖ³ª?
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//ï¿½ï¿½ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Ã¼ï¿½ï¿½Ö³ï¿½?
 		
 		@GetMapping(value = "/graph")
 		public String graphPage(String all,Model model) {
@@ -49,7 +51,7 @@ public class UpbitController {
 		
 	
 
-		//ÄÚÀÎ¸®½ºÆ®¸¦ °¡Á®¿À±â À§ÇØ ¸¸µé¾î ³õÀ½
+		//ï¿½ï¿½ï¿½Î¸ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		@GetMapping(value = "v1/market/{all}")
 		public String getUpbitMaretkAll(@PathVariable String all, Model model){
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
