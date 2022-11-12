@@ -56,6 +56,9 @@
 	</select>
 	<button id="selectButton">급등 조회</button>
 	
+	<input type = text id = "inputValue" value = '코인이름을 넣어주세요!'/>
+	<button id = "coinTextSearch">검색하기</button>
+	
 	<table class="table" id="dataMarket">
 		<thead>
 			<tr>
@@ -71,6 +74,8 @@
 	</table>
 	
 
+	
+
 	<!-- JavaScript Bundle with Popper -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
@@ -80,26 +85,16 @@
 	<script>
 
 /*<![CDATA[*/	
-	
-
-	
-	
 	$('#selectButton').click(function(){
-		
 		var selectMarketName = $('select').val();
 		console.log(selectMarketName);
-		
-		
-		
 		$.ajax({
 			type : "GET",
 			url : ("https://api.upbit.com/v1/ticker?markets="+selectMarketName),
 			dataType : 'json',
 			success: function (res){
-			
 				console.log(res)
 				var resJson = res[0]
-			
 				var change = resJson.change;// fall 하락 even 보합 rise 상승
 				//변화액은 전일종가 대비 현재가
 				var prevClosingPrice =  Math.floor(resJson.prev_closing_price).toLocaleString('ko-kr') // 전일종가
@@ -108,8 +103,6 @@
 				var changeRate = resJson.signed_change_rate // 부호가 있는 변화율 
 				var accTradePriceOneDay = Math.floor(resJson.acc_trade_price_24h/1000000).toLocaleString('ko-kr');// 24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
 				var changeRateInsert = changeRate*100;
-				
-				
 				if(change=='FALL'){
 					change = '하락'
 				}else if(change == 'EVEN'){
@@ -117,9 +110,6 @@
 				}else{
 					change = '상승'
 				}
-				
-				
-				
 				html='';
 				html+=
 					  "<tbody><tr><td>" + selectMarketName + "</td>"
@@ -136,7 +126,18 @@
 		})
 		
 		
+	});
+	
+	$('#coinTextSearch').click(function(){
+	    var inputValue = document.getElementById('inputValue').value;
+	    console.log(inputValue)
+	    
+	    var coinName ;
+	    coinName = document.getElementById('coinName').text;
+	    console.log(coinName)
 	})
+	
+	
 	
 	
 	
