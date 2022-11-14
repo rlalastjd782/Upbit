@@ -53,7 +53,7 @@
 		<option id='coinName' th:each="items: ${model}"
 			th:if="${#strings.contains(items.market,'KRW')}"
 			th:value="${items.market}" th:text="${items.korean_name}"></option>
-		
+	
 	</select>
 	<button id="selectButton">급등 조회</button>
 	
@@ -131,13 +131,38 @@
 	});
 	
 	$('#coinTextSearch').click(function(){
-	    var inputValue = document.getElementById('inputValue').value;
+		var marketName;
+		var coinName;
+		var coinEngName;
+		var coinNameList = [];
+		var coinEngNameList = [];
+		var inputValue = document.getElementById('inputValue').value;
 	    console.log(inputValue)
-	    var coinName ;
-	    coinName = document.getElementById('coinName').text;
-	    for(i=0; i<5; i++){
-	    	console.log(coinName)
-	    }
+	    coinName = $('select').find('option').map(function(){
+	    	return $(this).text();
+	    });
+	    coinEngName = $('select').find('option').map(function(){
+	    	return $(this).val();
+	    });
+	    
+		console.log(typeof coinName)
+		console.log(coinName.length)
+		
+		for (let i=1; i<=coinName.length; i++){
+			coinNameList.push(coinName[i]);
+		}
+		for (let i=1; i<=coinEngName.length; i++){
+			coinEngNameList.push(coinEngName[i]);
+		}
+		console.log(coinEngNameList)
+		
+		
+		if(coinNameList.includes(inputValue)==true){
+			marketName;
+		}
+		
+		
+	    
 	    
 	    
 	    
