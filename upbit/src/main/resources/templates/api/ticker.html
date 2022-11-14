@@ -53,10 +53,11 @@
 		<option id='coinName' th:each="items: ${model}"
 			th:if="${#strings.contains(items.market,'KRW')}"
 			th:value="${items.market}" th:text="${items.korean_name}"></option>
+		
 	</select>
 	<button id="selectButton">급등 조회</button>
 	
-	<input type = text id = "inputValue" value = '코인이름을 넣어주세요!'/>
+	<input type = text id = "inputValue" placeholder = '코인이름을 넣어주세요!'/>
 	<button id = "coinTextSearch">검색하기</button>
 	
 	<table class="table" id="dataMarket">
@@ -73,6 +74,7 @@
 		</thead>
 	</table>
 	
+
 
 	
 
@@ -131,10 +133,14 @@
 	$('#coinTextSearch').click(function(){
 	    var inputValue = document.getElementById('inputValue').value;
 	    console.log(inputValue)
-	    
 	    var coinName ;
 	    coinName = document.getElementById('coinName').text;
-	    console.log(coinName)
+	    for(i=0; i<5; i++){
+	    	console.log(coinName)
+	    }
+	    
+	    
+	    
 	})
 	
 	
