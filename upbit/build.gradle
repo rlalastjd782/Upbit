@@ -25,6 +25,8 @@ dependencies {
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
      // define any required OkHttp artifacts without version
     implementation("com.squareup.okhttp3:okhttp")
+    implementation 'org.jsoup:jsoup:1.15.3'
+    
     implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.1'
     implementation("com.squareup.okhttp3:logging-interceptor")
