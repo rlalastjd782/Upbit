@@ -55,7 +55,7 @@
 			th:value="${items.market}" th:text="${items.korean_name}"></option>
 	
 	</select>
-	<button id="selectButton">급등 조회</button>
+
 	
 	<input type = text id = "inputValue" placeholder = '코인이름을 넣어주세요!'/>
 	<button id = "coinTextSearch">검색하기</button>
@@ -66,7 +66,7 @@
 				<th scope="col">코인이름</th>
 				<th scope="col">현재가(원)</th>
 				<th scope="col">전일종가</th>
-				<th scope="col">변화액</th>
+				<th scope="col">변화액(원)</th>
 				<th scope="col">전일대비변화율</th>
 				<th scope="col">누적거래대금(백만원,1일)</th>
 				<th scope="col">상승보합정보</th>
@@ -87,47 +87,76 @@
 	<script>
 
 /*<![CDATA[*/	
-	$('#selectButton').click(function(){
+	var click = 0 ;
+	
+	$('select').hide();
+	$('document').ready(function(){
+		
+		
+		click +=1;
 		var selectMarketName = $('select').val();
-		console.log(selectMarketName);
-		$.ajax({
-			type : "GET",
-			url : ("https://api.upbit.com/v1/ticker?markets="+selectMarketName),
-			dataType : 'json',
-			success: function (res){
-				console.log(res)
-				var resJson = res[0]
-				var change = resJson.change;// fall 하락 even 보합 rise 상승
-				//변화액은 전일종가 대비 현재가
-				var prevClosingPrice =  Math.floor(resJson.prev_closing_price).toLocaleString('ko-kr') // 전일종가
-				var tradePrice = Math.floor(resJson.trade_price).toLocaleString('ko-kr') // 현재가 
-				var changePrice = Math.floor(resJson.signed_change_price).toLocaleString('ko-kr')	//부호가있는 변화액
-				var changeRate = resJson.signed_change_rate // 부호가 있는 변화율 
-				var accTradePriceOneDay = Math.floor(resJson.acc_trade_price_24h/1000000).toLocaleString('ko-kr');// 24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
-				var changeRateInsert = changeRate*100;
-				if(change=='FALL'){
-					change = '하락'
-				}else if(change == 'EVEN'){
-					change = '보합'
-				}else{
-					change = '상승'
-				}
-				html='';
-				html+=
-					  "<tbody><tr><td>" + selectMarketName + "</td>"
-					 	+ "<td>" + tradePrice + "</td>"
-						+ "<td>" + prevClosingPrice + "</td>"
-						+ "<td>" + changePrice + "원</td>"
-						+ "<td>" + changeRateInsert.toFixed(2) +"%</td>"
-						+ "<td>" + accTradePriceOneDay + "백만원</td>"
-						+ "<td>" + change + "</td></tr></tbody>"
-					 $("#dataMarket").append(html)
+		var coinEngName;
+		var coinEngNameList = [];
+		
+		coinEngName = $('select').find('option').map(function(){
+		   	return $(this).val();
+		});
+		for (let i=1; i<=coinEngName.length; i++){
+			coinEngNameList.push(coinEngName[i]);
+		}
+		//마지막 언디파인트 빼기
+		coinEngNameList.splice(coinEngNameList.length -1)
+		
+        if(click==1){
+			$.ajax({
+				type : "GET",
+				url : ("https://api.upbit.com/v1/ticker?markets="+coinEngNameList),
+				dataType : 'json',
+				success: function (res){
+					// 각각의  빈리스트 만들기
+					var marketNameList = []; //마켓이름
+					var changeList = []; // 상승하락 보합
+					var prevClosingPriceList = []; // 전일종가
+					var tradePriceList = []; //현재가
+					var changePriceList= []; // 부호가있는변화액
+					var changeRateList = []; // 부호가있는변화율
+					var accTradePriceOneDayList = [];//24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
+					for(let i=0; i<res.length; i++){
+						marketNameList.push(res[i].market)
+						changeList.push(res[i].change)
+						prevClosingPriceList.push(res[i].prev_closing_price)
+						tradePriceList.push(res[i].trade_price)
+						changePriceList.push(res[i].signed_change_price	)
+						changeRateList.push(res[i].signed_change_rate)
+						accTradePriceOneDayList.push(res[i].acc_trade_price_24h)
+					}
+					html='';
+					for(let i=0; i<res.length; i++){
+						if(changeList[i]=='FALL'){
+							changeList[i] = '하락'
+						}else if(changeList[i] == 'EVEN'){
+							changeList[i] = '보합'
+						}else{
+							changeList[i] = '상승'
+						} 
+						
+						html=
+							  "<tbody><tr><td>" + marketNameList[i] + "</td>"
+							 	+ "<td>" + tradePriceList[i].toLocaleString('ko-kr') + "</td>"
+								+ "<td>" + prevClosingPriceList[i].toLocaleString('ko-kr')+ "</td>"
+								+ "<td>" + changePriceList[i].toLocaleString('ko-kr')+ "</td>"
+								+ "<td>" + (changeRateList[i].toFixed(2)).toLocaleString('ko-kr')+"%</td>"
+								+ "<td>" + Math.floor(accTradePriceOneDayList[i]/1000000).toLocaleString('ko-kr') + "백만원</td>"
+								+ "<td>" + changeList[i] + "</td></tr></tbody>"
+						$("#dataMarket").append(html)
+					}
 				
-				
+			
 			}
 		})
 		
-		
+	    }
+	
 	});
 	
 	$('#coinTextSearch').click(function(){
@@ -155,11 +184,11 @@
 			coinEngNameList.push(coinEngName[i]);
 		}
 		console.log(coinEngNameList)
-		
-		
 		if(coinNameList.includes(inputValue)==true){
 			marketName;
 		}
+		
+		
 		
 		
 	    
