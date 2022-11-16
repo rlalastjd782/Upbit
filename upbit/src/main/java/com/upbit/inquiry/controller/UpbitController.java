@@ -19,14 +19,13 @@ public class UpbitController {
 
 	
 		private final UpbitServiceImpl upbitService;
-		//����������
+
 		@GetMapping(value = "/")
 		public String mainPage() {
 			return "api/main";
 			
 		}
-		//����������
-		//���⿡ �������� �޾ƿü��ֳ�?
+	
 		
 		@GetMapping(value = "/graph")
 		public String graphPage(String all,Model model) {

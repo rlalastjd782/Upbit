@@ -94,7 +94,7 @@ $(document).ready(function () {
 
     $('.minGraph').click(function () {
         //클릭 횟수 초기화
-        click = 0;
+      
     	click += 1;
      	var minselect = $("#minselect").val();
         if (minselect == null ){
@@ -105,6 +105,7 @@ $(document).ready(function () {
         console.log(minselect);       
         var marketSelect = $('select').val();
         var marketKoreaName = $('select').val();
+        console.log(click)
         if (click == 1) {
 	            html = '';
 	            html += '<option value = "1">1분봉</option>'
@@ -117,10 +118,6 @@ $(document).ready(function () {
 	                + '<option value = "240">240분봉</option>'
 	            $("#minselect").append(html);
         }
-        
-        
-   
-	
         
         $.ajax({
             type: "GET",
@@ -153,11 +150,20 @@ $(document).ready(function () {
                     var options = {
                         legend: 'none',
                         bar: { groupWidth: '80%' },
-                        candlestick: {
+                   	    candlestick: {
                             fallingColor: { strokeWidth: 0, fill: 'blue' }, // red
                             risingColor: { strokeWidth: 0, fill: 'red' }   // green
+                          },
+                        scales : {
+                          y : {
+                        	  axis : 'y',
+                              afterDataLimits: (scale) => {
+                                  scale.max = scale.max * 1.2;
+                                },
                           }
-                    };
+                        
+                        }
+                    }
 
                     var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
 

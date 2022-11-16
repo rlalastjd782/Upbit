@@ -13,14 +13,15 @@ public class ApiExamSearchBlog {
 
 
 	 public static void main(String[] args) {
-	        String clientId = "D2TjvDNSbOYQHkMv5DYP"; //애플리케이션 클라이언트 아이디
-	        String clientSecret = "tch8kL2JIv"; //애플리케이션 클라이언트 시크릿
+	        String clientId = "urCCraGmyOyGBr28FyJb"; //애플리케이션 클라이언트 아이디
+	        String clientSecret = "svXp9cCl_G"; //애플리케이션 클라이언트 시크릿
 
 
 	        String text = null;
 	        try {
 	            text = URLEncoder.encode("뉴스", "UTF-8");
 	        } catch (UnsupportedEncodingException e) {
+	        	
 	            throw new RuntimeException("검색어 인코딩 실패",e);
 	        }
 
