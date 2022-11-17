@@ -47,6 +47,12 @@ public class UpbitController {
 			
 		}
 
+		@GetMapping(value = "/tick")
+		public String tick(String all,Model model) {
+			model.addAttribute("model",upbitService.getUpbitMarket(all));
+			return "api/tick";
+			
+		}
 		
 	
 
