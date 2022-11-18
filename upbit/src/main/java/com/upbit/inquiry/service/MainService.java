@@ -15,7 +15,7 @@ import com.upbit.inquiry.DTO.MainDTO;
 @Service
 public class MainService {
 
-	private static String naverNews = "https://search.naver.com/search.naver?where=news&query=코인";
+	private static String naverNews = "https://search.naver.com/search.naver?where=news&query=%EC%BD%94%EC%9D%B8";
 	
 
 	public List<MainDTO> getNaverNews() throws IOException {

@@ -119,6 +119,13 @@
 					success: function (res){
 						console.log(res)
 						// 각각의  빈리스트 만들기
+						var allList = res.splice(0,114)
+						let resultUp;
+						let resultDown;
+						resultUp = allList.sort(function(a,b){
+							return b.acc_trade_price_24h - a.acc_trade_price_24h
+						})
+						console.log(resultUp)
 						var marketNameList = []; //마켓이름
 						var changeList = []; // 상승하락 보합
 						var prevClosingPriceList = []; // 전일종가
@@ -126,17 +133,17 @@
 						var changePriceList= []; // 부호가있는변화액
 						var changeRateList = []; // 부호가있는변화율
 						var accTradePriceOneDayList = [];//24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
-						for(let i=0; i<res.length; i++){
-							marketNameList.push(res[i].market)
-							changeList.push(res[i].change)
-							prevClosingPriceList.push(res[i].prev_closing_price)
-							tradePriceList.push(res[i].trade_price)
-							changePriceList.push(res[i].signed_change_price	)
-							changeRateList.push(res[i].signed_change_rate)
-							accTradePriceOneDayList.push(res[i].acc_trade_price_24h)
+						for(let i=0; i<resultUp.length; i++){
+							marketNameList.push(resultUp[i].market)
+							changeList.push(resultUp[i].change)
+							prevClosingPriceList.push(resultUp[i].prev_closing_price)
+							tradePriceList.push(resultUp[i].trade_price)
+							changePriceList.push(resultUp[i].signed_change_price	)
+							changeRateList.push(resultUp[i].signed_change_rate)
+							accTradePriceOneDayList.push(resultUp[i].acc_trade_price_24h)
 						}
 						html='';
-						for(let i=0; i<res.length; i++){
+						for(let i=0; i<resultUp.length; i++){
 							if(changeList[i]=='FALL'){
 								changeList[i] = '하락'
 							}else if(changeList[i] == 'EVEN'){
