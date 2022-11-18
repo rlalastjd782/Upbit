@@ -51,7 +51,7 @@
 		</div>
 	</nav>
 	<button id ="reset" >리이셋</button>
-	<h1>상승코인 top 20</h1>
+	<h1>상승코인 top 15</h1>
 
 	<select id="upbitAll" >
 		<option value="">코인을 골라주세요</option>
@@ -77,7 +77,7 @@
 			</tr>
 		</thead>
 	</table>
-	<h1>하락코인 top 20</h1>
+	<h1>하락코인 top 15</h1>
 		<table class="table" id="dataMarketDown">
 		<thead>
 			<tr>
@@ -140,7 +140,7 @@
 			
 			setInterval(function(){
 				$('#reset').trigger('click');
-			},3000);
+			},5000);
 	
 			
 			
@@ -168,7 +168,7 @@
 						var changePriceList= []; // 부호가있는변화액
 						var changeRateList = []; // 부호가있는변화율
 						var accTradePriceOneDayList = [];//24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
-						for(let i=0; i<20; i++){
+						for(let i=0; i<15; i++){
 							marketNameList.push(resultUp[i].market)
 							changeList.push(resultUp[i].change)
 							prevClosingPriceList.push(resultUp[i].prev_closing_price)
@@ -199,7 +199,7 @@
 						}
 					
 						html='';
-						for(let i=0; i<20; i++){
+						for(let i=0; i<15; i++){
 							if(changeList[i]=='FALL'){
 								changeList[i] = '하락'
 							}else if(changeList[i] == 'EVEN'){
@@ -219,7 +219,7 @@
 							$("#dataMarket").append(html)
 						}
 						htmlDown='';
-						for(let i=0; i<20; i++){
+						for(let i=0; i<15; i++){
 							if(changeListDown[i]=='FALL'){
 								changeListDown[i] = '하락'
 							}else if(changeListDown[i] == 'EVEN'){
