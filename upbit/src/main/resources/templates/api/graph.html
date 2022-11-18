@@ -92,30 +92,36 @@ $(document).ready(function () {
     $('.minGraph').click(function () {
         //클릭 횟수 초기화
       
-    	click += 1;
+    	click +=1;
      	var minselect = $("#minselect").val();
         if (minselect == null ){
         	minselect = 1;
+        	click = 1;
         }
         
        
-        console.log(minselect);       
+           
         var marketSelect = $('select').val();
         var marketKoreaName = $('select').val();
+        console.log(minselect);   
         console.log(click)
-        if (click == 1) {
-	            html = '';
-	            html += '<option value = "1">1분봉</option>'
-	                + '<option value = "3">3분봉</option>'
-	                + '<option value = "5">5분봉</option>'
-	                + '<option value = "10">10분봉</option>'
-	                + '<option value = "15">15분봉</option>'
-	                + '<option value = "30">30분봉</option>'
-	                + '<option value = "60">60분봉</option>'
-	                + '<option value = "240">240분봉</option>'
-	            $("#minselect").append(html);
+        if(click == 1){
+	        if (minselect == 1) {
+					{        	
+			            html = '';
+			            html += '<option value = "1">1분봉</option>'
+			                + '<option value = "3">3분봉</option>'
+			                + '<option value = "5">5분봉</option>'
+			                + '<option value = "10">10분봉</option>'
+			                + '<option value = "15">15분봉</option>'
+			                + '<option value = "30">30분봉</option>'
+			                + '<option value = "60">60분봉</option>'
+			                + '<option value = "240">240분봉</option>'
+			            $("#minselect").append(html);
+		        }
+	        }
         }
-        
+
         $.ajax({
             type: "GET",
             url: ("https://api.upbit.com/v1/candles/minutes/" + minselect + "?market=" + marketSelect + "&to=" + "&count="+ countNum),
