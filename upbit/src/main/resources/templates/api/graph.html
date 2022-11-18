@@ -36,11 +36,9 @@
 					<li class="nav-item"><a class="nav-link"
 						th:href=@{/v1/market/all}>코인상세정보</a></li>
 					<li class="nav-item"><a class="nav-link" th:href=@{/graph}>코인그래프</a>
-					<li class="nav-item">
-					<a class="nav-link"
-						th:href="@{/analysis}">급등분석</a>
-						</li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/ticker}">상승하락</a>
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/analysis}">상승하락급등분석</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/ticker}">전체상승하락</a>
 					</li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/tick}">체결내역</a>
 					</li>
@@ -53,8 +51,6 @@
 			</div>
 		</div>
 	</nav>
-	<h1>그래프 그릴꺼임</h1>
-
 
 	<select id="upbitAll">
 		<option value="">코인을 골라주세요</option>
@@ -85,9 +81,6 @@
 $(document).ready(function () {
     // 마켓이름으로 그래프 그리기
     // 분봉 차트 먼저
-
-
-
     //클릭횟수로 그래프 그릴때 하기.
     //클릭횟수로 그래프 그릴때 하기.
     var click = 0;
