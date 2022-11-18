@@ -23,12 +23,8 @@ public class MainService {
 	Logger logger = LoggerFactory.getLogger(MainService.class);
 	List<MainDTO> mainResponseList = new ArrayList<>();	
     Document doc = Jsoup.connect(naverNews).get();
-    
     Elements contents = doc.select(".news_area");
     logger.info("뉴스주소 ==={}" , contents);
-    System.out.println(contents);
-    
-    
     for(Element content : contents) {
     	MainDTO mainResponse =  MainDTO.builder()
     			.newsPress(content.select(".press").text())
@@ -40,7 +36,7 @@ public class MainService {
     			
     	mainResponseList.add(mainResponse);
     }
-    
+    System.out.println(mainResponseList);
     return mainResponseList;
 	}
 }

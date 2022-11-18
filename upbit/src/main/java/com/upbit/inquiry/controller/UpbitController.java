@@ -24,15 +24,14 @@ public class UpbitController {
 
 	
 		private final UpbitServiceImpl upbitService;
-		private MainService mainService;
+		private final MainService mainService;
 
 		@GetMapping(value = "/")
-		public String mainPage(Model model) throws IOException {
-		
+		public String mainPage(String news, Model model) throws IOException {
 		  List<MainDTO> mainResponse = mainService.getNaverNews();
 		  System.out.println(mainResponse);
 		  model.addAttribute("news", mainResponse);
-			return "api/main";
+		  return "api/main";
 			
 		}
 	
