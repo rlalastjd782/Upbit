@@ -2,11 +2,16 @@
 
 package com.upbit.inquiry.controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.upbit.inquiry.DTO.MainDTO;
+import com.upbit.inquiry.service.MainService;
 import com.upbit.inquiry.service.Impl.UpbitServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -19,9 +24,14 @@ public class UpbitController {
 
 	
 		private final UpbitServiceImpl upbitService;
+		private MainService mainService;
 
 		@GetMapping(value = "/")
-		public String mainPage() {
+		public String mainPage(Model model) throws IOException {
+		
+		  List<MainDTO> mainResponse = mainService.getNaverNews();
+		  System.out.println(mainResponse);
+		  model.addAttribute("news", mainResponse);
 			return "api/main";
 			
 		}

@@ -51,7 +51,7 @@
 			</div>
 		</div>
 	</nav>
-	<h1>틱 그래프 그릴꺼임</h1>
+
 
 
 	<select id="upbitAll">
@@ -60,7 +60,7 @@
 			th:if="${#strings.contains(items.market,'KRW')}"
 			th:value="${items.market}" th:text="${items.korean_name}"></option>
 	</select>
-	<button id = "tick">버튼을눌뤄저
+	<button id = "tick">클릭
 	</button>
 
 
@@ -72,23 +72,6 @@
 	/*<![CDATA[*/	
 
 
-	
-	$('#tick').click(function(){
-		  var marketName = $('select').val();
-		  console.log(marketName)
-		  
-		  
-		  
-		  $.ajax({
-			  type : "GET",
-			  url : "https://api.upbit.com/v1/trades/ticks?market=" + marketName + "&count=100",
-			  dataType : 'json',
-			  success : function(res){
-				  console.log(res)
-			  }
-		  })
-	})
-		
 		
 		
 		
