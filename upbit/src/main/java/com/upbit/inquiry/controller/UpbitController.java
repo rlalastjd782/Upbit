@@ -53,8 +53,6 @@ public class UpbitController {
 			return "api/tick";
 			
 		}
-		
-	
 
 		//���θ���Ʈ�� �������� ���� ����� ����
 		@GetMapping(value = "v1/market/{all}")

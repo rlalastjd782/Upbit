@@ -111,13 +111,13 @@
 			//마지막 언디파인트 빼기
 			coinEngNameList.splice(coinEngNameList.length -1)
 			
-	    
-	      /*   setInterval(function(){ */
+	  
 				$.ajax({
 					type : "GET",
 					url : ("https://api.upbit.com/v1/ticker?markets="+coinEngNameList),
 					dataType : 'json',
 					success: function (res){
+						console.log(res)
 						// 각각의  빈리스트 만들기
 						var marketNameList = []; //마켓이름
 						var changeList = []; // 상승하락 보합
@@ -160,7 +160,7 @@
 			})
 			
 		    
-/* 	    	}, 1000); */
+
 	        
 		})
 		

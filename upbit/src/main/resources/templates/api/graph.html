@@ -74,8 +74,10 @@
 	<select id="minselect">분을 선택해주세요
 	</select>
 
-	<div style="width: 80%; height: 100%;" id="chart_div"></div>
-
+	<div  id="chart_div" style="width: 900px; height: 500px;"></div>
+	<br>
+	<div>매집봉</div>
+	<div  id="chart2_div" style="width: 900px; height: 500px;"></div>
 
 	<script>
 	/*<![CDATA[*/	
@@ -126,20 +128,24 @@ $(document).ready(function () {
             url: ("https://api.upbit.com/v1/candles/minutes/" + minselect + "?market=" + marketSelect + "&to=" + "&count="+ countNum),
             dataType: 'json',
             success: function (res) {
+            	console.log(res)
             	var candleDateTime= [];
             	var openingPrice = [];
             	var highPrice = [];
             	var lowPrice = [];
             	var tradePrice = [];
+            	var tradeVolume = [];
             	for(let i=0; i<countNum; i++){
             		candleDateTime.unshift(res[i].candle_date_time_kst);
             	    openingPrice.unshift(res[i].opening_price); //시가
                     highPrice.unshift(res[i].high_price); //고가
                     lowPrice.unshift(res[i].low_price); //저가
                     tradePrice.unshift(res[i].trade_price); // 종가 */
+                    tradeVolume.unshift(res[i].candle_acc_trade_volume);
             	}
  	            google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(drawChart);
+                google.charts.setOnLoadCallback(drawChart2);
                 function drawChart() {
                 	var a = []
                 	for(i=0; i<countNum; i++){
@@ -148,27 +154,30 @@ $(document).ready(function () {
                 	}
 					console.log(a)	                	
                     var data = google.visualization.arrayToDataTable(a, true);
-
                     var options = {
                         legend: 'none',
                         bar: { groupWidth: '80%' },
                    	    candlestick: {
                             fallingColor: { strokeWidth: 0, fill: 'blue' }, // red
                             risingColor: { strokeWidth: 0, fill: 'red' }   // green
-                          },
-                        scales : {
-                          y : {
-                        	  axis : 'y',
-                              afterDataLimits: (scale) => {
-                                  scale.max = scale.max * 1.2;
-                                },
                           }
-                        
-                        }
                     }
-
                     var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
-
+                    chart.draw(data, options);
+                } 
+                function drawChart2() {
+                	var c = []
+                	for(i=0; i<countNum; i++){
+                		var d = [candleDateTime[i],tradeVolume[i]] 
+ 						c.push(d)	               
+                	}
+					console.log(c)	                	
+                    var data = google.visualization.arrayToDataTable(c, true);
+                    var options = {
+                        legend: 'none',
+                        bar: { groupWidth: '80%' },
+                   	                    }
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart2_div'));
                     chart.draw(data, options);
                 } 
 
@@ -186,22 +195,24 @@ $(document).ready(function () {
             url: ("https://api.upbit.com/v1/candles/days?market="+marketSelect+"&count="+countNum+"&convertingPriceUnit=KRW"),
             dataType: 'json',
             success: function (res) {
+            	console.log(res)
             	var candleDateTime= [];
             	var openingPrice = [];
             	var highPrice = [];
             	var lowPrice = [];
             	var tradePrice = [];
-            	
-        		
+            	var tradeVolume = [];
             	for(let i=0; i<countNum; i++){
             		candleDateTime.unshift(res[i].candle_date_time_kst);
             	    openingPrice.unshift(res[i].opening_price); //시가
                     highPrice.unshift(res[i].high_price); //고가
                     lowPrice.unshift(res[i].low_price); //저가
                     tradePrice.unshift(res[i].trade_price); // 종가 */
+                    tradeVolume.unshift(res[i].candle_acc_trade_volume);
             	}
  	            google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(drawChart);
+                google.charts.setOnLoadCallback(drawChart2);
                 function drawChart() {
                 	var a = []
                 	for(i=0; i<countNum; i++){
@@ -224,6 +235,21 @@ $(document).ready(function () {
 
                     chart.draw(data, options);
                 } 
+                function drawChart2() {
+                	var c = []
+                	for(i=0; i<countNum; i++){
+                		var d = [candleDateTime[i],tradeVolume[i]] 
+ 						c.push(d)	               
+                	}
+					console.log(c)	                	
+                    var data = google.visualization.arrayToDataTable(c, true);
+                    var options = {
+                        legend: 'none',
+                        bar: { groupWidth: '80%' },
+                   	                    }
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart2_div'));
+                    chart.draw(data, options);
+                } 
 
             }
         });
@@ -233,7 +259,7 @@ $(document).ready(function () {
         click += 1;
         var marketSelect = $('select').val();
         var marketKoreaName = $('select').val();
-        var weekCountNum = 40;
+        var weekCountNum = 100;
         $.ajax({
             type: "GET",
             url: ("https://api.upbit.com/v1/candles/weeks?market="+marketSelect+"&count="+weekCountNum),
@@ -244,7 +270,7 @@ $(document).ready(function () {
             	var highPrice = [];
             	var lowPrice = [];
             	var tradePrice = [];
-            	
+            	var tradeVolume = [];
         		
             	for(let i=0; i<weekCountNum; i++){
             		candleDateTime.unshift(res[i].candle_date_time_kst);
@@ -252,9 +278,11 @@ $(document).ready(function () {
                     highPrice.unshift(res[i].high_price); //고가
                     lowPrice.unshift(res[i].low_price); //저가
                     tradePrice.unshift(res[i].trade_price); // 종가 */
+                    tradeVolume.unshift(res[i].candle_acc_trade_volume);
             	}
  	            google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(drawChart);
+                google.charts.setOnLoadCallback(drawChart2);
                 function drawChart() {
                 	var a = []
                 	for(i=0; i<weekCountNum; i++){
@@ -277,6 +305,22 @@ $(document).ready(function () {
 
                     chart.draw(data, options);
                 } 
+                function drawChart2() {
+                	var c = []
+                	for(i=0; i<countNum; i++){
+                		var d = [candleDateTime[i],tradeVolume[i]] 
+ 						c.push(d)	               
+                	}
+					console.log(c)	                	
+                    var data = google.visualization.arrayToDataTable(c, true);
+                    var options = {
+                        legend: 'none',
+                        bar: { groupWidth: '80%' },
+                   	                    }
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart2_div'));
+                    chart.draw(data, options);
+                } 
+
 
             }
         });
@@ -285,7 +329,7 @@ $(document).ready(function () {
         click += 1;
         var marketSelect = $('select').val();
         var marketKoreaName = $('select').val();
-        var monthCountNum = 30;
+        var monthCountNum = 50;
         $.ajax({
             type: "GET",
             url: ("https://api.upbit.com/v1/candles/months?market="+marketSelect+"&count="+monthCountNum),
@@ -297,7 +341,7 @@ $(document).ready(function () {
             	var highPrice = [];
             	var lowPrice = [];
             	var tradePrice = [];
-            	
+            	var tradeVolume = [];
         		
             	for(let i=0; i<monthCountNum; i++){
             		candleDateTime.unshift(res[i].candle_date_time_kst);
@@ -305,9 +349,11 @@ $(document).ready(function () {
                     highPrice.unshift(res[i].high_price); //고가
                     lowPrice.unshift(res[i].low_price); //저가
                     tradePrice.unshift(res[i].trade_price); // 종가 */
+                    tradeVolume.unshift(res[i].candle_acc_trade_volume);
             	}
  	            google.charts.load('current', { 'packages': ['corechart'] });
                 google.charts.setOnLoadCallback(drawChart);
+                google.charts.setOnLoadCallback(drawChart2);
                 function drawChart() {
                 	var a = []
                 	for(i=0; i<monthCountNum; i++){
@@ -331,7 +377,23 @@ $(document).ready(function () {
                     var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
 
                     chart.draw(data, options);
+                }
+                function drawChart2() {
+                	var c = []
+                	for(i=0; i<countNum; i++){
+                		var d = [candleDateTime[i],tradeVolume[i]] 
+ 						c.push(d)	               
+                	}
+					console.log(c)	                	
+                    var data = google.visualization.arrayToDataTable(c, true);
+                    var options = {
+                        legend: 'none',
+                        bar: { groupWidth: '80%' },
+                   	                    }
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart2_div'));
+                    chart.draw(data, options);
                 } 
+
 
             }
         });

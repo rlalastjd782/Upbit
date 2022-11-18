@@ -78,6 +78,17 @@
 	$('#tick').click(function(){
 		  var marketName = $('select').val();
 		  console.log(marketName)
+		  
+		  
+		  
+		  $.ajax({
+			  type : "GET",
+			  url : "https://api.upbit.com/v1/trades/ticks?market=" + marketName + "&count=100",
+			  dataType : 'json',
+			  success : function(res){
+				  console.log(res)
+			  }
+		  })
 	})
 		
 		
