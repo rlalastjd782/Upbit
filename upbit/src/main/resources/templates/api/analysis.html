@@ -149,6 +149,7 @@
 			function ajaxData(){
 				$.ajax({
 					type : "GET",
+					async: true,
 					url : ("https://api.upbit.com/v1/ticker?markets="+coinEngNameList),
 					dataType : 'json',
 					success: function (res){
