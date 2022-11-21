@@ -120,16 +120,13 @@
 				var allList = res.splice(0, 114)
 				let resultUp;
 				let resultDown;
-				var select;
+				var selectClick;
+				
+				
+				
 		 		resultUp = allList.sort(function (a, b) {
 					return b.acc_trade_price_24h - a.acc_trade_price_24h
 				}) 
-
-
-		
-
-
-			
 				var marketNameList = []; //마켓이름
 				var changeList = []; // 상승하락 보합
 				var prevClosingPriceList = []; // 전일종가

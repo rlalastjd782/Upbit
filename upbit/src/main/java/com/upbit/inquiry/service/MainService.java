@@ -16,7 +16,7 @@ import com.upbit.inquiry.DTO.MainDTO;
 public class MainService {
 
 	private static String naverNews = "https://search.naver.com/search.naver?where=news&query=%EC%BD%94%EC%9D%B8";
-	
+	private static String UpbitNews = "https://upbit.com/trends";
 
 	public List<MainDTO> getNaverNews() throws IOException {
 
@@ -24,7 +24,7 @@ public class MainService {
 	List<MainDTO> mainResponseList = new ArrayList<>();	
     Document doc = Jsoup.connect(naverNews).get();
     Elements contents = doc.select(".news_area");
-    logger.info("뉴스주소 ==={}" , contents);
+
     for(Element content : contents) {
     	MainDTO mainResponse =  MainDTO.builder()
     			.newsPress(content.select(".press").text())
@@ -36,7 +36,12 @@ public class MainService {
     			
     	mainResponseList.add(mainResponse);
     }
-    System.out.println(mainResponseList);
+
     return mainResponseList;
 	}
+	
+
+	
+	
+	
 }
