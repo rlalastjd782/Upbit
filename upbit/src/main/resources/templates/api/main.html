@@ -13,7 +13,11 @@
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-	
+<style>
+.pointer {
+  cursor: pointer;
+}
+</style>
 <title>Welcome Coin</title>
 </head>
 <body>
@@ -44,14 +48,22 @@
       </div>
     </div>
   </nav>
-  	<div>업비트 관련 늬우스</div>
-
+  	<div>업비트 뉴스피드</div>
+		<table class="table table-hover" id="dataMarket">
+			<thead>
+				<tr>
+					<th>언론사</th>
+					<th>제목</th>
+					<th>시간</th>
+				</tr>
+			</thead>
+		</table>
   	
   
   
 
 
- 			<div id = "newstitle">관련뉴스(네이버)</div>
+ 			<div id = "newstitle">네이버 뉴스피드</div>
 		<table class="table table-hover" id="qnapost-table">
 			<thead>
 				<tr>
@@ -78,10 +90,51 @@
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <script>
+/*<![CDATA[*/	
 
+	$.ajax({
+		type : "GET",
+		url : ("https://api-manager.upbit.com/api/v1/coin_news"),
+		dataType : "json",
+		success : function(res){
+			console.log(res)
+			resJson = Object.values(res)
+			resJson1 = resJson[1]
+			console.log(resJson1)
+			featuredSetting = Object.values(resJson1)
+			featuredList = featuredSetting[1] // 10개짜리 뉴스
+			list = featuredSetting[0] // 50개 짜리 뉴스
+		
+			
+			var featuredTitle = [];
+			var featuredContent = [];
+			var featuredUrl = [];
+			var featuredCompany = [];
+			var featuredcreatedAt = [];
+			for (let i=0; i<featuredList.length; i++){
+				featuredTitle.push(featuredList[i].title);
+				featuredContent.push(featuredList[i].content);
+				featuredUrl.push(featuredList[i].url);
+				featuredCompany.push(featuredList[i].company);
+				featuredcreatedAt.push(featuredList[i].created_at.substr(0,19).replace("T"," "))
+			}
+			
 	
+			html = "";
+			for(let i=0; i<10; i++){
+			html = 
+			  "<tbody><tr><td>" + featuredCompany[i] + "</td>"
+				+ "<td class ='pointer' onClick =" +"\"location.href="+"'"+featuredUrl[i]+"'"+"\""+">" + featuredTitle[i] +"</td>"
+				+ "<td>" + featuredcreatedAt[i] + "</td></tr></tbody>"
+			$("#dataMarket").append(html)
+			 
+			}
+			
+			
+		}
+	})
 
-
+   /*]]>*/
 
 </script>
 

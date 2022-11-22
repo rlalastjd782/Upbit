@@ -115,18 +115,19 @@
 			url: ("https://api.upbit.com/v1/ticker?markets=" + coinEngNameList),
 			dataType: 'json',
 			success: function (res) {
-				console.log(res)
 				// 각각의  빈리스트 만들기
 				var allList = res.splice(0, 114)
 				let resultUp;
-				let resultDown;
+				let changeResult;
 				var selectClick;
 				
-				
-				
-		 		resultUp = allList.sort(function (a, b) {
+				resultUp = allList.sort(function (a, b) {
 					return b.acc_trade_price_24h - a.acc_trade_price_24h
 				}) 
+				
+		 		console.log(resultUp)
+		
+				
 				var marketNameList = []; //마켓이름
 				var changeList = []; // 상승하락 보합
 				var prevClosingPriceList = []; // 전일종가
