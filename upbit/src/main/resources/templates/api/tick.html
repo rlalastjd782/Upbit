@@ -40,7 +40,7 @@
 						th:href="@{/analysis}">상승하락급등분석</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/ticker}">전체상승하락</a>
 					</li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/tick}">체결내역</a>
+						<li class="nav-item"><a class="nav-link" th:href="@{/tick}">주간상승률</a>
 					</li>
 				</ul>
 				<form class="d-flex">
@@ -54,25 +54,75 @@
 
 
 
-	<select id="upbitAll">
-		<option value="">코인을 골라주세요</option>
-		<option id='coinName' th:each="items: ${model}"
-			th:if="${#strings.contains(items.market,'KRW')}"
-			th:value="${items.market}" th:text="${items.korean_name}"></option>
-	</select>
-	<button id = "tick">클릭
-	</button>
-
-<H1>미정</H1>
 
 
-	<div style="width: 80%; height: 100%;" id="chart_div"></div>
+<H1>주간상승률</H1>
+
+		<table class="table table-hover" id="coinRank">
+			<thead>
+				<tr>
+					<th>순위</th>
+					<th>이름(영문이름/마켓명)</th>
+					<th>상승률</th>
+				</tr>
+			</thead>
+		</table>
+  	
+
+
+
+
+
 
 
 	<script>
 	/*<![CDATA[*/	
 
 
+		$.ajax({
+			type : "GET",
+			url : ("https://crix-api-cdn.upbit.com/v1/crix/trends/weekly_change_rate?count=20"),
+			dataType : "json",
+			success : function(res){
+				console.log(res)
+				resJson = Object.values(res)
+				resJson = resJson[0]
+				console.log(resJson)
+				
+				rank = [];
+				localName = [];
+				pairName = [];
+				changeRate = [];
+				
+				for(let i=0; i<resJson.length; i++){
+					rank.push(resJson[i].rank);
+					localName.push(resJson[i].localName);
+					pairName.push(resJson[i].pair);
+					changeRate.push(((resJson[i].signedChangeRate)*100).toFixed(2));
+				}
+				
+
+				html= "";
+				for(let i=0; i<resJson.length; i++){
+					html = 
+						  "<tbody><tr><td>" + rank[i] + "</td>"
+							+ "<td >" + localName[i] +"("+pairName[i]+")"+"</td>"
+							+ "<td>" + changeRate[i] + "%</td></tr></tbody>"
+						$("#coinRank").append(html)
+				}
+				
+			}
+			
+			
+		})
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
