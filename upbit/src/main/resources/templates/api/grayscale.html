@@ -43,6 +43,8 @@
 					</li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/calendar}">코인달력</a>
 					</li>
+						<li class="nav-item"><a class="nav-link" th:href="@{/grayscale}">그레이스케일포트폴리오</a>
+					</li>
 				</ul>
 				<form class="d-flex">
 					<input class="form-control me-2" type="search" placeholder="Search"
@@ -52,7 +54,19 @@
 			</div>
 		</div>
 	</nav>
-	
+		<table class="table" id="grayscale">
+		<thead>
+			<tr>
+				<th scope="col">코인이름</th>
+				<th scope="col">현재가(원)</th>
+				<th scope="col">전일종가</th>
+				<th scope="col">변화액(원)</th>
+				<th scope="col">전일대비변화율<i class="fa-solid fa-sort"></i></th>
+				<th scope="col">누적거래대금(백만원,1일)</th>
+				<th scope="col">상승보합정보</th>
+			</tr>
+		</thead>
+	</table>
 	
 
 
@@ -68,14 +82,19 @@
 	<script>
 
 /*<![CDATA[*/	
-$.ajax({
-	type : "GET",
-	url : "https://fapi.coinglass.com/api/grayscaleOpenInterest",
-	dataType : "json",
-	success : function(res){
-		console.log(res)
-	}
-})
+	
+	var res = $.ajax({
+			type : "GET",
+			url : "https://fapi.coinglass.com/api/grayscaleOpenInterest",
+			dataType : "json",
+			success : function(res){
+				console.log(res)
+			}
+		})
+		
+	console.log(res)
+		
+		
 
 		
    /*]]>*/
