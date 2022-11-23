@@ -35,14 +35,21 @@ public class UpbitController {
 			
 		}
 		
+		
 		@GetMapping(value = "/calendar")
-		public String calendar(String news, Model model) throws IOException {
-		  List<MainDTO> mainResponse = mainService.getNaverNews();
-		  System.out.println(mainResponse);
-		  model.addAttribute("news", mainResponse);
-		  return "api/calendar";
+		public String calendarPage(String all,Model model) {
+			model.addAttribute("model",upbitService.getUpbitMarket(all));
+			return "api/calendar";
 			
 		}
+		
+		@GetMapping(value = "/grayscale")
+		public String grayscalePage(String all,Model model) {
+			model.addAttribute("model",upbitService.getUpbitMarket(all));
+			return "api/grayscale";
+			
+		}
+		
 	
 		
 		@GetMapping(value = "/graph")
