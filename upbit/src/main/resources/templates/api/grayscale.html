@@ -57,13 +57,13 @@
 		<table class="table" id="grayscale">
 		<thead>
 			<tr>
-				<th scope="col">코인이름</th>
-				<th scope="col">현재가(원)</th>
-				<th scope="col">전일종가</th>
-				<th scope="col">변화액(원)</th>
-				<th scope="col">전일대비변화율<i class="fa-solid fa-sort"></i></th>
-				<th scope="col">누적거래대금(백만원,1일)</th>
-				<th scope="col">상승보합정보</th>
+				<th scope="col">코인종류</th>
+				<th scope="col">보유갯수</th>
+				<th scope="col">24시간 수량변화</th>
+				<th scope="col">7일 수량변화</th>
+				<th scope="col">30일 수량변화</th>
+				<th scope="col">마감시간</th>
+				<th scope="col">업데이트 시간</th>
 			</tr>
 		</thead>
 	</table>
@@ -81,20 +81,81 @@
 
 	<script>
 
+	/* 메소드 설명
+	closeTime : 마감시간
+	d7OIChange : 7일간의 수량변화
+	d30OIChange : 30일간 수량변화
+	holdings : holdings per share의 가격을 보면 36.49 달러입니다. 현시간 1BTC의 가격은 36490 달러이고 이를 위의 비율로 계산해보면 1gbtc=36.49 달러가 되는거죠. 
+	marketPrice :  marker price per share은 gbtc를 장외거래에서 판매할 때 거래되는 가격이 되는거죠.
+	oIChange : 24시간 수량변화
+	oIChangePercent : 갯수의 %변화율
+	openInterest : 현재 보유 수량 totalholdings
+	openInterestVol : 현재 보유 수량(달러) totalholdings($) 
+	premiumRate :  변동사항 premiumRate
+	price : 가격
+	rate : 모름
+	symbol : 코인이름
+	symbolLogo : 코인로고
+	updateTime : 업데이트 타임 : 타임스탬프(유닉스기반 )-> 변형해서 사용해야함
+	*/
+	
+	
+	
 /*<![CDATA[*/	
 	
-	var res = $.ajax({
+$.ajax({
 			type : "GET",
 			url : "https://fapi.coinglass.com/api/grayscaleOpenInterest",
-			dataType : "json",
 			success : function(res){
 				console.log(res)
+				var data = Object.values(res)
+				var dataList = data[2]
+				console.log(dataList)
+				var marketName = []; // 이름
+				var openInterest = []; // 보유수량
+ 				var d7OIChange = []; //7일 수량변화
+				var d30OIChange = []; //30일 수량변화
+				var oIChange = []; //24시간 수량변화
+				var closeTime = [] ; // 마감시간
+				var updateTime = []; //업데이트 시간
+				for (var i = 0; i < dataList.length; i++){
+					marketName.push(dataList[i].symbol);
+					openInterest.push(dataList[i].openInterest);
+					d7OIChange.push(dataList[i].d7OIChange);
+					d30OIChange.push(dataList[i].d30OIChange);
+					oIChange.push(dataList[i].oIChange);
+					closeTime.push(dataList[i].closeTime);
+					updateTime.push(dataList[i].updateTime);
+				}
+				
+							
+				for(i=0; i<dataList.length; i++){
+					closeTime[i] = Date(closeTime[i]);
+					updateTime[i] = Date(updateTime[i]);
+				}
+				
+				
+				console.log(closeTime)
+				
+				html= "";
+				for(let i=0; i<dataList.length; i++){
+					html = 
+						  "<tbody><tr><td>" + marketName[i] + "</td>"
+							+ "<td >" + openInterest[i] +"</td>"
+							+ "<td >" + d7OIChange[i] +"</td>"
+							+ "<td >" + d30OIChange[i] +"</td>"
+							+ "<td >" + oIChange[i] +"</td>"
+							+ "<td >" + closeTime[i] +"</td>"
+							+ "<td>" + updateTime[i] + "</td></tr></tbody>"
+						$("#grayscale").append(html)
+				}
+				
+				
+				
+				
+				
 			}
-		})
-		
-	console.log(res)
-		
-		
+	})
 
 		
    /*]]>*/
