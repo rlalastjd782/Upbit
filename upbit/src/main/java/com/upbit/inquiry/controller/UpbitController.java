@@ -43,6 +43,14 @@ public class UpbitController {
 			
 		}
 		
+		@GetMapping(value = "/whale")
+		public String whalePage(String all,Model model) {
+			model.addAttribute("model",upbitService.getUpbitMarket(all));
+			return "api/whale";
+			
+		}
+		
+		
 		@GetMapping(value = "/grayscale")
 		public String grayscalePage(String all,Model model) {
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
