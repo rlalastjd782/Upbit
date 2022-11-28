@@ -43,6 +43,14 @@ public class UpbitController {
 			
 		}
 		
+		
+		@GetMapping(value = "/coinRate")
+		public String coinRatePage(String all,Model model) {
+			model.addAttribute("model",upbitService.getUpbitMarket(all));
+			return "api/coinRate";
+			
+		}
+		
 		@GetMapping(value = "/whale")
 		public String whalePage(String all,Model model) {
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
