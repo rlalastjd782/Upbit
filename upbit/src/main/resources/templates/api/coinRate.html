@@ -78,7 +78,7 @@
 				<th scope="col">변화액(원)</th>
 				<th scope="col">전일대비변화율<i class="fa-solid fa-sort"></i></th>
 				<th scope="col">누적거래대금(백만원,1일)</th>
-				<th scope="col">상승보합정보</th>
+				<th scope="col">거래대금순위변동</th>
 			</tr>
 		</thead>
 	</table>
@@ -115,103 +115,27 @@
 			//마지막 언디파인트 빼기
 			coinEngNameList.splice(coinEngNameList.length -1)
 			
-	  
+
+			var date = new Date(2019,0);
+			date = date.toISOString().substring(0, 19)+"Z";
+			console.log(date)
+			
 			$.ajax({
 			type: "GET",
-			url: ("https://api.upbit.com/v1/ticker?markets=" + coinEngNameList),
+			url: ("https://api.upbit.com/v1/ticker?markets=" + coinEngNameList +"&to=" + date),
 			dataType: 'json',
 			success: function (res) {
-				// 각각의  빈리스트 만들기
-				var allList = res.splice(0, 114)
-				let resultUp;
-				let changeResult;
-				var selectClick;
-				
-				resultUp = allList.sort(function (a, b) {
-					return b.acc_trade_price_24h - a.acc_trade_price_24h
-				}) 
-				
-		 		console.log(resultUp)
-		
-				
-				var marketNameList = []; //마켓이름
-				var changeList = []; // 상승하락 보합
-				var prevClosingPriceList = []; // 전일종가
-				var tradePriceList = []; //현재가
-				var changePriceList = []; // 부호가있는변화액
-				var changeRateList = []; // 부호가있는변화율
-				var accTradePriceOneDayList = [];//24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
-				for (let i = 0; i < resultUp.length; i++) {
-					marketNameList.push(resultUp[i].market)
-					changeList.push(resultUp[i].change)
-					prevClosingPriceList.push(resultUp[i].prev_closing_price)
-					tradePriceList.push(resultUp[i].trade_price)
-					changePriceList.push(resultUp[i].signed_change_price)
-					changeRateList.push(resultUp[i].signed_change_rate)
-					accTradePriceOneDayList.push(resultUp[i].acc_trade_price_24h)
-				}
-				html = '';
-				for (let i = 0; i < resultUp.length; i++) {
-					if (changeList[i] == 'FALL') {
-						changeList[i] = '하락'
-					} else if (changeList[i] == 'EVEN') {
-						changeList[i] = '보합'
-					} else {
-						changeList[i] = '상승'
-					}
-						html =
-						"<tbody><tr><td>" + marketNameList[i] + "</td>"
-						+ "<td>" + tradePriceList[i].toLocaleString('ko-kr') + "</td>"
-						+ "<td>" + prevClosingPriceList[i].toLocaleString('ko-kr') + "</td>"
-						+ "<td>" + changePriceList[i].toLocaleString('ko-kr') + "</td>"
-						+ "<td>" + (changeRateList[i].toFixed(4) * 100).toLocaleString('ko-kr') + "%</td>"
-						+ "<td>" + Math.floor(accTradePriceOneDayList[i] / 1000000).toLocaleString('ko-kr') + "백만원</td>"
-						+ "<td>" + changeList[i] + "</td></tr></tbody>"
-					$("#dataMarket").append(html)
-				}
+				console.log(res)
 
 			}})
-	
-		
-	
-$('#coinTextSearch').click(function(){
-	var marketName;
-	var coinName;
-	var coinEngName;
-	var coinNameList = [];
-	var coinEngNameList = [];
-	var inputValue = document.getElementById('inputValue').value;
-    console.log(inputValue)
-    coinName = $('select').find('option').map(function(){
-    	return $(this).text();
-    });
-    coinEngName = $('select').find('option').map(function(){
-    	return $(this).val();
-    });
-    
-	console.log(typeof coinName)
-	console.log(coinName.length)
-	
-	for (let i=1; i<=coinName.length; i++){
-		coinNameList.push(coinName[i]);
-	}
-	for (let i=1; i<=coinEngName.length; i++){
-		coinEngNameList.push(coinEngName[i]);
-	}
-	console.log(coinEngNameList)
-	if(coinNameList.includes(inputValue)==true){
-		marketName;
-	}
-	
-	
-		
-		
-	    
-	    
-	    
-	    
-	})
+			
 		})
+	
+		
+		
+		
+	    
+	    
 	
 	
 	
