@@ -45,6 +45,8 @@
 					</li>
 						<li class="nav-item"><a class="nav-link" th:href="@{/grayscale}">그레이스케일포트폴리오</a>
 					</li>
+								<li class="nav-item"><a class="nav-link" th:href="@{/coinRate}">급등급락</a>
+					</li>
 				</ul>
 				<form class="d-flex">
 					<input class="form-control me-2" type="search" placeholder="Search"
@@ -107,10 +109,8 @@ $.ajax({
 			type : "GET",
 			url : "https://fapi.coinglass.com/api/grayscaleOpenInterest",
 			success : function(res){
-				console.log(res)
 				var data = Object.values(res)
 				var dataList = data[2]
-				console.log(dataList)
 				var marketName = []; // 이름
 				var openInterest = []; // 보유수량
  				var d7OIChange = []; //7일 수량변화
@@ -134,7 +134,7 @@ $.ajax({
 					updateTime[i] = Date(updateTime[i]);
 				}
 				
-				
+				console.log(updateTime)
 				console.log(closeTime)
 				
 				html= "";
@@ -142,9 +142,9 @@ $.ajax({
 					html = 
 						  "<tbody><tr><td>" + marketName[i] + "</td>"
 							+ "<td >" + openInterest[i] +"</td>"
+							+ "<td >" + oIChange[i] +"</td>"
 							+ "<td >" + d7OIChange[i] +"</td>"
 							+ "<td >" + d30OIChange[i] +"</td>"
-							+ "<td >" + oIChange[i] +"</td>"
 							+ "<td >" + closeTime[i] +"</td>"
 							+ "<td>" + updateTime[i] + "</td></tr></tbody>"
 						$("#grayscale").append(html)
