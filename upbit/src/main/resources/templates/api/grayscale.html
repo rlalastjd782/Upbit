@@ -130,21 +130,68 @@ $.ajax({
 				
 							
 				for(i=0; i<dataList.length; i++){
-					closeTime[i] = Date(closeTime[i]);
-					updateTime[i] = Date(updateTime[i]);
-				}
-				
+					closeTime[i] = closeTime[i] + 32400000; // 한국기준 시로 변경
+					updateTime[i] = updateTime[i] + 32400000; // 한국기준 시로 변경
+					
+					closeTime[i] = new Date(closeTime[i]).toISOString();
+					updateTime[i] = new  Date(updateTime[i]).toISOString();
+					closeTime[i] = closeTime[i].substr(0,19).replace("T"," ");
+					updateTime[i] = updateTime[i].substr(0,19).replace("T"," ");
+					closeTime[i] = closeTime[i].replace("Z"," ");
+					updateTime[i] = updateTime[i].replace("Z"," ");
+				} 
 				console.log(updateTime)
-				console.log(closeTime)
-				
+				console.log(closeTime[0])
 				html= "";
 				for(let i=0; i<dataList.length; i++){
+					if(marketName[i]=="BTC"){
+						marketName[i]="비트코인(BTC)"
+					}
+					else if(marketName[i]=="ETH"){
+						marketName[i]="이더리움(ETH)"
+					}
+					else if(marketName[i]=="LTC"){
+						marketName[i]="라이트코인(LTC)"
+					}
+					else if(marketName[i]=="BCH"){
+						marketName[i]="비트코인캐시(BCH)"
+					}
+					else if(marketName[i]=="ZEC"){
+						marketName[i]="지캐시(ZEC)"
+					}
+					else if(marketName[i]=="MANA"){
+						marketName[i]="디센트럴랜드(MANA)"
+					}
+					else if(marketName[i]=="XLM"){
+						marketName[i]="스텔라루멘(XLM)"
+					}
+					else if(marketName[i]=="ZEN"){
+						marketName[i]="Horizen(ZEN)"
+					}
+					else if(marketName[i]=="LPT"){
+						marketName[i]="라이브피어(LPT)"
+					}
+					else if(marketName[i]=="LINK"){
+						marketName[i]="체인링크(LINK)"
+					}
+					else if(marketName[i]=="SOL"){
+						marketName[i]="솔라나(SOL)"
+					}
+					else if(marketName[i]=="BAT"){
+						marketName[i]="베이직어텐션토큰(BAT)"
+					}
+					else if(marketName[i]=="FIL"){
+						marketName[i]="파일코인(FIL)"
+					}
+					else if(marketName[i]=="ETC"){
+						marketName[i]="이더리움캐시(ETC)"
+					}
 					html = 
 						  "<tbody><tr><td>" + marketName[i] + "</td>"
-							+ "<td >" + openInterest[i] +"</td>"
-							+ "<td >" + oIChange[i] +"</td>"
-							+ "<td >" + d7OIChange[i] +"</td>"
-							+ "<td >" + d30OIChange[i] +"</td>"
+							+ "<td >" + openInterest[i].toFixed(2) +"</td>"
+							+ "<td >" + oIChange[i].toFixed(2) +"</td>"
+							+ "<td >" + d7OIChange[i].toFixed(2) +"</td>"
+							+ "<td >" + d30OIChange[i].toFixed(2) +"</td>"
 							+ "<td >" + closeTime[i] +"</td>"
 							+ "<td>" + updateTime[i] + "</td></tr></tbody>"
 						$("#grayscale").append(html)
