@@ -121,7 +121,7 @@
 			console.log(date)
 
 		var urlList = []
-			
+		var coinDataList = [];
 		for(i=0; i<coinEngNameList.length; i++){
 			urlList.push("https://api.upbit.com/v1/candles/minutes/1?market="+coinEngNameList[i]+"&to=&count=1")
 		}
@@ -154,12 +154,13 @@
 		
 		async function load(){
 			for(i=0; i<coinEngNameList.length; i++){
-			coinData(i);
-			await timer(100);
-			}
+				coinData(i);
+				await timer(100);
+				}
 		}
-		
 		load()
+		console.log(coinDataList)
+		
 			
 		
 		
