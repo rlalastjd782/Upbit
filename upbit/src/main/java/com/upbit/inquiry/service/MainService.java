@@ -39,9 +39,4 @@ public class MainService {
 
     return mainResponseList;
 	}
-	
-
-	
-	
-	
 }
