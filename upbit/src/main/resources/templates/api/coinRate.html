@@ -157,42 +157,41 @@
 	
 		var coinDataList =[];
 		
-		for(i=0; i<10; i++){
-			var coin = $.ajax({
-					type: "GET",
-					url: urlList[i],
-					dataType: 'json',
-					async: false,
-					success: function (res) {
-					console.log(res)
-				}})	
-			coinDataList.push(coin.responseJSON)	
+		function list(a,b){
+			for(i=a; i<b; i++){
+				var coin = $.ajax({
+						type: "GET",
+						url: urlList[i],
+						dataType: 'json',
+						async: false,
+						success: function (res) {
+						console.log(res)
+					}})	
+				
+				coinDataList.push(coin.responseJSON)	
+			}
+			
 		}
-		console.log(coin.responseJSON)
-		console.log(coinDataList)
-		 
 		
+		setTimeout(()=>list(0,10))
+		setTimeout(()=>list(10,20),1100)
+		setTimeout(()=>list(20,30),2200)
+		setTimeout(()=>list(30,40),3300)
+		setTimeout(()=>list(40,50),4400)
+		setTimeout(()=>list(50,60),5500)
+		setTimeout(()=>list(60,70),6600)
+		setTimeout(()=>list(70,80),7700)
+		setTimeout(()=>list(80,90),8800)
+		setTimeout(()=>list(90,100),9900)
+		setTimeout(()=>list(100,110),11000)
+		setTimeout(()=>list(110,114),12100)
 		
-
+        setTimeout(()=>console.log(coinDataList),12200)
+		
 	
-		
-		
+		console.log(coinDataList[40])
+	
 		})
-		
-
-		
-		
-		
-	    
-	    
-	
-	
-	
-	
-	
-	
-
-
 
    /*]]>*/
 </script>
