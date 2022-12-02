@@ -64,10 +64,15 @@
 			th:value="${items.market}" th:text="${items.korean_name}"></option>
 	
 	</select>
-
 	
-	<input type = text id = "inputValue" placeholder = '코인이름을 넣어주세요!'/>
-	<button id = "coinTextSearch">검색하기</button>
+	<select id="upbitAll2">
+		<option value="">코인을 골라주세요</option>
+		<option id='coinKoreaName' th:each="items: ${model}"
+			th:if="${#strings.contains(items.market,'KRW')}"
+			th:value="${items.korean_name}" th:text="${items.korean_name}"></option>
+	
+	</select>
+	
 	
 	<table class="table" id="dataMarket">
 		<thead>
@@ -106,19 +111,32 @@
 			var selectMarketName = $('select').val();
 			var coinEngName;
 			var coinEngNameList = [];
-			coinEngName = $('select').find('option').map(function(){
+			var coinKorName;
+			var coinKorNameList = [];
+			coinEngName = $('#upbitAll').find('option').map(function(){
 				   return $(this).val();
 			});
+			
+			coinKorName = $('#upbitAll2').find('option').map(function(){
+				   return $(this).val();
+			});
+			
 			for (let i=1; i<=coinEngName.length; i++){
 				coinEngNameList.push(coinEngName[i]);
 			}
+			for (let i=1; i<=coinKorName.length; i++){
+				coinKorNameList.push(coinKorName[i]);
+			}
+
 			//마지막 언디파인트 빼기
-			coinEngNameList.splice(coinEngNameList.length -1)
+			coinEngNameList.splice(coinEngNameList.length -1) //영어이름 리스트 만들기
+			coinKorNameList.splice(coinKorNameList.length -1) // 한국이름 리스트 만들기
+			console.log(coinKorNameList)
+			console.log(coinEngNameList)
 			
 
 			var date = new Date(2019,0);
 			date = date.toISOString().substring(0, 19)+"Z";
-			console.log(date)
 
 		var urlList = []
 	
@@ -152,7 +170,7 @@
 		}
 		console.log(coin.responseJSON)
 		console.log(coinDataList)
-		
+		 
 		
 		
 
