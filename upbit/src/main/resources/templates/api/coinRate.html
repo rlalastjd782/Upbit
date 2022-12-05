@@ -67,11 +67,16 @@
 	
 	<select id="upbitAll2">
 		<option value="">코인을 골라주세요</option>
-		<option id='coinKoreaName' th:each="items: ${model}"
-			th:if="${#strings.contains(items.market,'KRW')}"
-			th:value="${items.korean_name}" th:text="${items.korean_name}"></option>
+		<option id='coinKoreaName' th:each="items: ${jsonArray}"
+			th:value="${items.market}" th:text="${items.market}"></option>
 	
 	</select>
+
+<!-- 		<select id="upbitAll4">
+		<option value="">코인을 골라주세요</option>
+		<option th:value="${data.market}" th:text="${data.market}"></option>
+	
+	</select>  -->
 	
 	
 	<table class="table" id="dataMarket">
@@ -103,7 +108,7 @@
 /*<![CDATA[*/	
 	var click = 0 ;
 	
-	$('select').hide();
+	/* $('select').hide(); */
 	
 	
 		$('document').ready(function(){
@@ -131,9 +136,6 @@
 			//마지막 언디파인트 빼기
 			coinEngNameList.splice(coinEngNameList.length -1) //영어이름 리스트 만들기
 			coinKorNameList.splice(coinKorNameList.length -1) // 한국이름 리스트 만들기
-			console.log(coinKorNameList)
-			console.log(coinEngNameList)
-			
 
 			var date = new Date(2019,0);
 			date = date.toISOString().substring(0, 19)+"Z";
@@ -173,33 +175,7 @@
 			
 		}
 		
-		setTimeout(()=>list(0,10))
-		setTimeout(()=>list(10,20),1100)
-		setTimeout(()=>list(20,30),2200)
-		setTimeout(()=>list(30,40),3300)
-		setTimeout(()=>list(40,50),4400)
-		setTimeout(()=>list(50,60),5500)
-		setTimeout(()=>list(60,70),6600)
-		setTimeout(()=>list(70,80),7700)
-		setTimeout(()=>list(80,90),8800)
-		setTimeout(()=>list(90,100),9900)
-		setTimeout(()=>list(100,110),11000)
-		setTimeout(()=>list(110,114),12100)
 		
-		
-		var coinDataFour = [];
-		var coinDataZero = [];
-		
-		
-		
-        setTimeout(()=>(
-        		console.log(coinDataList),
-        		
-        		),12200)
-		
-		
-	
-	
 		})
 
    /*]]>*/

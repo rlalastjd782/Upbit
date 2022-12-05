@@ -12,8 +12,6 @@ import com.upbit.inquiry.DTO.UpBitMarketAllDTO;
 
 @FeignClient(name = "UpbitAll", url = "https://api.upbit.com/v1/market/all")
 public interface UpbitAllService {
-
-	
 	@RequestMapping(method = RequestMethod.GET)
 	List<UpBitMarketAllDTO> getUpBitMarketAll(@RequestParam(value="market")String result2);
 }

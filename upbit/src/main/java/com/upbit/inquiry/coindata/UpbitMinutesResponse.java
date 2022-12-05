@@ -16,7 +16,4 @@ public class UpbitMinutesResponse {
 	private String candleAccTradePrice; //누적거래금액
 	private String candleAccTradeVoiume; // 누적거래량
 	private String unit; //분 단위
-	
-	
-	
 }
