@@ -141,7 +141,7 @@
 		var urlList = []
 	
 		for(i=0; i<coinEngNameList.length; i++){
-			urlList.push("https://api.upbit.com/v1/candles/minutes/1?market="+coinEngNameList[i]+"&to=&count=1")
+			urlList.push("https://api.upbit.com/v1/candles/minutes/240?market="+coinEngNameList[i]+"&to=&count=2")
 		}
 			
 		function tickerData(){	
@@ -186,9 +186,18 @@
 		setTimeout(()=>list(100,110),11000)
 		setTimeout(()=>list(110,114),12100)
 		
-        setTimeout(()=>console.log(coinDataList),12200)
 		
-	
+		var coinDataFour = [];
+		var coinDataZero = [];
+		
+		
+		
+        setTimeout(()=>(
+        		console.log(coinDataList),
+        		
+        		),12200)
+		
+		
 	
 	
 		})
