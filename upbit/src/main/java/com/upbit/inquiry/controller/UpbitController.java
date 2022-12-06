@@ -54,10 +54,14 @@ public class UpbitController {
 		
 		@GetMapping(value = "/coinRate")
 		public String coinRatePage(String all,Model model) throws IOException, ParseException {
+			// 일자 없으면 빈값 지정 해서 사용
+			
+			System.out.println(upbitService.getUpbitMarket(all).get(0).getMarket());
 			String date =  "2022-12-05T01:00:00Z";
 			// 봉개수 지정
-			String count = "12";
-			// 마켓이름
+			String count = "2";
+			// 마켓이름 <- 해당하는것은 리스트로 저장하여 for 문 돌려 리스트로 저장하기
+			
 			String marketName = "KRW-ETH";
 			
 			
