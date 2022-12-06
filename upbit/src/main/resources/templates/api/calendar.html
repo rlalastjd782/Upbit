@@ -58,6 +58,14 @@
 	</nav>
 	
 	
+		<select id="upbitAll">
+		<option value="">코인이름을 골라주세요</option>
+		<option th:each="items: ${model}"
+			th:if="${#strings.contains(items.market,'KRW')}"
+			th:value="${items.market}" th:text="${items.korean_name}"></option>
+
+	</select>
+	
 
 
 
@@ -72,7 +80,6 @@
 	<script>
 
 /*<![CDATA[*/	
-
 
 		
    /*]]>*/
