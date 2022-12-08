@@ -56,21 +56,15 @@
 			</div>
 		</div>
 	</nav>
-
+<!-- 
 	<select id="upbitAll">
 		<option value="">코인을 골라주세요</option>
 		<option id='coinName' th:each="items: ${model}"
-			th:if="${#strings.contains(items.market,'KRW')}"
-			th:value="${items.market}" th:text="${items.korean_name}"></option>
+			th:value="${items.korean_name}" th:text="${items.korean_name}"></option>
 	
-	</select>
+	</select> -->
 	
-	<select id="upbitAll2">
-		<option value="">코인을 골라주세요</option>
-		<option id='coinKoreaName' th:each="items: ${jsonArray}"
-			th:value="${items.market}" th:text="${items.market}"></option>
-	
-	</select>
+
 
 <!-- 		<select id="upbitAll4">
 		<option value="">코인을 골라주세요</option>
@@ -86,11 +80,15 @@
 				<th scope="col">현재가(원)</th>
 				<th scope="col">전일종가</th>
 				<th scope="col">변화액(원)</th>
-				<th scope="col">전일대비변화율<i class="fa-solid fa-sort"></i></th>
-				<th scope="col">누적거래대금(백만원,1일)</th>
-				<th scope="col">거래대금순위변동</th>
 			</tr>
 		</thead>
+		
+	
+				
+		
+		
+		
+		</tbody>
 	</table>
 	
 
@@ -106,77 +104,7 @@
 	<script>
 
 /*<![CDATA[*/	
-	var click = 0 ;
 	
-	/* $('select').hide(); */
-	
-	
-		$('document').ready(function(){
-			click +=1;
-			var selectMarketName = $('select').val();
-			var coinEngName;
-			var coinEngNameList = [];
-			var coinKorName;
-			var coinKorNameList = [];
-			coinEngName = $('#upbitAll').find('option').map(function(){
-				   return $(this).val();
-			});
-			
-			coinKorName = $('#upbitAll2').find('option').map(function(){
-				   return $(this).val();
-			});
-			
-			for (let i=1; i<=coinEngName.length; i++){
-				coinEngNameList.push(coinEngName[i]);
-			}
-			for (let i=1; i<=coinKorName.length; i++){
-				coinKorNameList.push(coinKorName[i]);
-			}
-
-			//마지막 언디파인트 빼기
-			coinEngNameList.splice(coinEngNameList.length -1) //영어이름 리스트 만들기
-			coinKorNameList.splice(coinKorNameList.length -1) // 한국이름 리스트 만들기
-
-			var date = new Date(2019,0);
-			date = date.toISOString().substring(0, 19)+"Z";
-
-		var urlList = []
-	
-		for(i=0; i<coinEngNameList.length; i++){
-			urlList.push("https://api.upbit.com/v1/candles/minutes/240?market="+coinEngNameList[i]+"&to=&count=2")
-		}
-			
-		function tickerData(){	
-				$.ajax({
-				type: "GET",
-				url: ("https://api.upbit.com/v1/ticker?markets=" + coinEngNameList +"&to=" + date),
-				dataType: 'json',
-				success: function (res) {
-	
-				}})
-				
-			}
-	
-		var coinDataList =[];
-		
-		function list(a,b){
-			for(i=a; i<b; i++){
-				var coin = $.ajax({
-						type: "GET",
-						url: urlList[i],
-						dataType: 'json',
-						async: false,
-						success: function (res) {
-						console.log(res)
-					}})	
-				
-				coinDataList.push(coin.responseJSON)	
-			}
-			
-		}
-		
-		
-		})
 
    /*]]>*/
 </script>

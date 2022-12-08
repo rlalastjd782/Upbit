@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.upbit.inquiry.DTO.MainDTO;
 import com.upbit.inquiry.service.MainService;
+import com.upbit.inquiry.service.Impl.CoinServiceImpl;
 import com.upbit.inquiry.service.Impl.UpbitServiceImpl;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class UpbitController {
 	
 		private final UpbitServiceImpl upbitService;
 		private final MainService mainService;
+		private final CoinServiceImpl coinServiceImpl;
 
 		@GetMapping(value = "/")
 		public String mainPage(String news, Model model) throws IOException {
@@ -46,8 +48,9 @@ public class UpbitController {
 		
 		
 		@GetMapping(value = "/coinRate")
-		public String coinRatePage(String all,Model model) throws Exception{
-			model.addAttribute("model",upbitService.getUpbitMarket(all));
+		public String coinRatePage(String all,Model model){
+			System.out.println(coinServiceImpl.coinRanking());
+			model.addAttribute("model",coinServiceImpl.coinRanking());
 			return "api/coinRate";
 			
 		}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.upbit.inquiry.mapper.CoinMapper">
+
+	<!-- coinDTO 전체컬럼 -->
+	<sql id="ranking">
+		  korean_name
+		, candle_date_time_kst
+		, candle_acc_trade_price
+		, trade_price
+		, ranking
+	</sql>
+
+
+
+	<!--시간별 랭킹 구하기 -->
+	
+	<select id = "rankingSelect" parameterType = "com.upbit.inquiry.DTO.CoinDTO"  resultType = "com.upbit.inquiry.DTO.CoinDTO">
+		SELECT
+			cat.korean_name,
+			cmt.candle_date_time_kst ,
+			cmt.candle_acc_trade_price ,
+			cmt.trade_price 
+			,rank() over(order by candle_acc_trade_price desc) as ranking
+		FROM
+			coin_minutes_table cmt,
+			coin_all_table cat 
+		WHERE
+			candle_date_time_kst  = '2022-12-04T08:00:00' and cmt.market = cat.market 
+	</select>
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
