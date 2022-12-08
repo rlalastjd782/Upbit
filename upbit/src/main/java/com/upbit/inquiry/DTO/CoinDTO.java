@@ -19,8 +19,8 @@ public class CoinDTO {
 		if(trade_price < 100) {
 			trade_price = Math.round(trade_price*100)/100.0;
 		}
-		if(this.korean_name == "비트토렌트") {
-			trade_price = Math.round(trade_price*100)/10000.0;
+		if(korean_name.equals("비트토렌트")){
+			trade_price = Math.round(trade_price*100000)/100000.0;
 		}
 		System.out.println(trade_price);
 		BigDecimal test1 = new BigDecimal(trade_price);
