@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.upbit.inquiry.DTO.CoinDTO;
 import com.upbit.inquiry.DTO.MainDTO;
 import com.upbit.inquiry.service.MainService;
 import com.upbit.inquiry.service.Impl.CoinServiceImpl;
@@ -49,8 +50,8 @@ public class UpbitController {
 		
 		@GetMapping(value = "/coinRate")
 		public String coinRatePage(String all,Model model){
-			System.out.println(coinServiceImpl.coinRanking());
-			model.addAttribute("model",coinServiceImpl.coinRanking());
+			List<CoinDTO> coinRankingList = coinServiceImpl.coinRanking();
+			model.addAttribute("model",coinRankingList);
 			return "api/coinRate";
 			
 		}

@@ -1,5 +1,6 @@
 package com.upbit.inquiry.service.Impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class CoinServiceImpl {
 		
 		
 		public List<CoinDTO> coinRanking() {
-			return coinMapper.rankingSelect();
+			List<CoinDTO> coinDTOList = coinMapper.rankingSelect();
+			return coinDTOList;
 				
 		}
 	

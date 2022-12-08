@@ -75,19 +75,24 @@
 	
 	<table class="table" id="dataMarket">
 		<thead>
-			<tr>
+			<tr >
 				<th scope="col">코인이름</th>
-				<th scope="col">현재가(원)</th>
-				<th scope="col">전일종가</th>
-				<th scope="col">변화액(원)</th>
+				<th scope="col">코인가격(종가)</th>
+				<th scope="col">거래대금</th>
+				<th scope="col">거래시간</th>
+				<th scope="col">랭킹</th>
 			</tr>
 		</thead>
 		
-	
-				
-		
-		
-		
+		<tbody >
+				<tr id = "trmodel" th:each = "items : ${model}">
+					<td th:text = "${items.korean_name}"></td>
+		 			<td th:text = "${items.trade_price}"></td>
+					<td th:text = "${items.candle_acc_trade_price}"></td>
+					<td th:text = "${items.candle_date_time_kst}"></td>
+					<td th:text = "${items.ranking}"></td> 
+				</tr>
+					
 		</tbody>
 	</table>
 	
@@ -104,6 +109,8 @@
 	<script>
 
 /*<![CDATA[*/	
+		
+	
 	
 
    /*]]>*/
