@@ -13,7 +13,7 @@
 
 	<!--시간별 랭킹 구하기 -->
 	
-	<select id = "rankingSelect" parameterType = "com.upbit.inquiry.DTO.CoinDTO"  resultType = "com.upbit.inquiry.DTO.CoinDTO">
+	<select id = "rankingSelect" parameterType = "com.upbit.inquiry.DTO.CoinResponse"  resultType = "com.upbit.inquiry.DTO.CoinResponse">
 		SELECT
 			cat.korean_name,
 			cmt.candle_date_time_kst ,

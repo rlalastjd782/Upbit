@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.upbit.inquiry.DTO.CoinDTO;
+import com.upbit.inquiry.DTO.CoinResponse;
 import com.upbit.inquiry.mapper.CoinMapper;
 import com.upbit.inquiry.service.CoinService;
 
@@ -19,12 +19,8 @@ public class CoinServiceImpl implements CoinService {
 		private  CoinMapper coinMapper;
 		
 		@Override
-		public List<CoinDTO> coinRanking() throws Exception {
-			List<CoinDTO> coinDTOList = coinMapper.rankingSelect();
-			
-			
-			
-			
+		public List<CoinResponse> coinRanking() throws Exception {
+			List<CoinResponse> coinDTOList = coinMapper.rankingSelect();
 			return coinDTOList;
 				
 		}
