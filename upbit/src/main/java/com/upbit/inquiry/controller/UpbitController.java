@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.upbit.inquiry.DTO.CoinRequest;
 import com.upbit.inquiry.DTO.CoinResponse;
 import com.upbit.inquiry.DTO.MainDTO;
 import com.upbit.inquiry.service.MainService;
@@ -45,6 +48,14 @@ public class UpbitController {
 			return "api/calendar";
 			
 		}
+		
+		@PostMapping("/coinRate")
+		public String coinRateSelect(CoinRequest coinParam) {
+			CoinResponse coin = new CoinResponse();
+			coin.setTrade_price(coinParam.getTrade_price());
+			return "redirect:/coinRate";
+		}
+		
 		
 		
 		@GetMapping(value = "/coinRate")

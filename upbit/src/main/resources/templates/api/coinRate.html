@@ -72,10 +72,10 @@
 	
 	</select>  -->
 	<!-- 달력추가 -->	
-	<form onsubmit="return false;">
+	<form id = "formsend" onsubmit="return false;" action = "/coinRate" method="post">
 		<input type='date' name='userBirthday' class = 'date' />
 		<input type='time' name='time' value = "00:00:00"/>
-		<input type= 'submit'  id = 'select' value = "검색"/>
+		<button type= 'submit' name ="selectDate" id = 'select' >검색</button>
 		
 	</form>
 	<table class="table" id="dataMarket">
@@ -129,14 +129,12 @@
 			
 			var inputText3 = inputText + "T" + inputText2 + ":00";
 			console.log(inputText3)
-			return inputText;
+			document.getElementById('formsend').submit();
+			
+			return inputText3;
 		})
 		
-		function dateset(){
-			
-			
-		}
-		
+
 		
 
 		
