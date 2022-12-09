@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.upbit.inquiry.DTO.CoinRequest;
 import com.upbit.inquiry.DTO.CoinResponse;
 
 @Mapper
@@ -13,5 +14,5 @@ public interface CoinMapper {
 	List<CoinResponse> rankingSelect() throws Exception;
 	
 	
-	
+	void select(CoinRequest coin);
 }

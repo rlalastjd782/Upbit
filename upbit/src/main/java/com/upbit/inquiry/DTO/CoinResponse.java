@@ -3,7 +3,6 @@ package com.upbit.inquiry.DTO;
 import java.math.BigDecimal;
 
 import lombok.Data;
-
 @Data
 public class CoinResponse {
 
