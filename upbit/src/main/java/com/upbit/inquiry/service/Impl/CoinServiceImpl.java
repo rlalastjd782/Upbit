@@ -22,7 +22,6 @@ public class CoinServiceImpl implements CoinService {
 		public List<CoinResponse> coinRanking() throws Exception {
 			List<CoinResponse> coinDTOList = coinMapper.rankingSelect();
 			return coinDTOList;
-				
 		}
 	
 }

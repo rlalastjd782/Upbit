@@ -41,7 +41,6 @@ public class UpbitController {
 		
 		@GetMapping(value = "/calendar")
 		public String calendarPage(String all,Model model) {
-			System.out.println(upbitService.getUpbitMarket(all));
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
 			return "api/calendar";
 			
@@ -51,10 +50,6 @@ public class UpbitController {
 		@GetMapping(value = "/coinRate")
 		public String coinRatePage(String all,Model model) throws Exception{
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking();
-			
-			
-			
-			
 			model.addAttribute("model",coinRankingList);
 			return "api/coinRate";
 			
@@ -104,7 +99,6 @@ public class UpbitController {
 			
 		}
 
-		//���θ���Ʈ�� �������� ���� ����� ����
 		@GetMapping(value = "v1/market/{all}")
 		public String getUpbitMaretkAll(@PathVariable String all, Model model){
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
