@@ -72,8 +72,12 @@
 	
 	</select>  -->
 	<!-- 달력추가 -->	
-	<input type='date' name='userBirthday' class = 'date' />
-	<button id = 'select'>검색</button>
+	<form onsubmit="return false;">
+		<input type='date' name='userBirthday' class = 'date' />
+		<input type='time' name='time' value = "00:00:00"/>
+		<input type= 'submit'  id = 'select' value = "검색"/>
+		
+	</form>
 	<table class="table" id="dataMarket">
 	
 		<thead>
@@ -111,12 +115,27 @@
 
 /*<![CDATA[*/	
 		
+	// 시간 초기화 부분 (db에서 검색할 부분)
 		$('#select').on('click', function(){
-			
 			var inputText = $('input[name=userBirthday]').val();
-			console.log(inputText)
+			var inputText2 = $('input[name=time]').val();
+			
+			var t1 = inputText2[0];
+			var t2 = inputText2[1];
+			console.log(t1)
+			console.log(t2)
+			inputText2 = t1 + t2+ ":00";			
+	
+			
+			var inputText3 = inputText + "T" + inputText2 + ":00";
+			console.log(inputText3)
 			return inputText;
 		})
+		
+		function dateset(){
+			
+			
+		}
 		
 		
 
