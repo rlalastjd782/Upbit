@@ -11,8 +11,6 @@
 		, ranking
 	</sql>
 
-
-
 	<!--시간별 랭킹 구하기 -->
 	
 	<select id = "rankingSelect" parameterType = "com.upbit.inquiry.DTO.CoinDTO"  resultType = "com.upbit.inquiry.DTO.CoinDTO">
@@ -29,17 +27,4 @@
 			candle_date_time_kst  = '2022-12-04T08:00:00' and cmt.market = cat.market 
 	</select>
 	
-	
-
-
-
-
-
-
-
-
-
-
-
-
 </mapper>

@@ -71,9 +71,11 @@
 		<option th:value="${data.market}" th:text="${data.market}"></option>
 	
 	</select>  -->
-	
-	
+	<!-- 달력추가 -->	
+	<input type='date' name='userBirthday' class = 'date' />
+	<button id = 'select'>검색</button>
 	<table class="table" id="dataMarket">
+	
 		<thead>
 			<tr >
 				<th scope="col">코인이름</th>
@@ -92,7 +94,6 @@
 					<td th:text = "${items.candle_date_time_kst}"></td>
 					<td th:text = "${items.ranking}"></td> 
 				</tr>
-					
 		</tbody>
 	</table>
 	
@@ -109,6 +110,16 @@
 	<script>
 
 /*<![CDATA[*/	
+		
+		$('#select').on('click', function(){
+			
+			var inputText = $('input[name=userBirthday]').val();
+			console.log(inputText)
+			return inputText;
+		})
+		
+		
+
 		
 
 
