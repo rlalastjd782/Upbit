@@ -53,6 +53,7 @@ public class UpbitController {
 		public String coinRateSelect(CoinRequest coinParam) {
 			CoinResponse coin = new CoinResponse();
 			coin.setTrade_price(coinParam.getTrade_price());
+			
 			return "api/coinRate";
 		}
 		
