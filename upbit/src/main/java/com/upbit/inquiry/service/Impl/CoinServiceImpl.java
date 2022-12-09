@@ -1,24 +1,30 @@
 package com.upbit.inquiry.service.Impl;
 
-import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.upbit.inquiry.DTO.CoinDTO;
 import com.upbit.inquiry.mapper.CoinMapper;
+import com.upbit.inquiry.service.CoinService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CoinServiceImpl {
+public class CoinServiceImpl implements CoinService {
 
-		private final CoinMapper coinMapper;
+		@Autowired
+		private  CoinMapper coinMapper;
 		
-		
-		public List<CoinDTO> coinRanking() {
+		@Override
+		public List<CoinDTO> coinRanking() throws Exception {
 			List<CoinDTO> coinDTOList = coinMapper.rankingSelect();
+			
+			
+			
+			
 			return coinDTOList;
 				
 		}

@@ -49,8 +49,12 @@ public class UpbitController {
 		
 		
 		@GetMapping(value = "/coinRate")
-		public String coinRatePage(String all,Model model){
+		public String coinRatePage(String all,Model model) throws Exception{
 			List<CoinDTO> coinRankingList = coinServiceImpl.coinRanking();
+			
+			
+			
+			
 			model.addAttribute("model",coinRankingList);
 			return "api/coinRate";
 			

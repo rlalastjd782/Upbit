@@ -26,7 +26,7 @@
 			coin_minutes_table cmt,
 			coin_all_table cat 
 		WHERE
-			candle_date_time_kst  = '2022-12-04T08:00:00' and cmt.market = cat.market 
+			candle_date_time_kst  = '2022-12-04T07:00:00' and cmt.market = cat.market 
 	</select>
 	
 	

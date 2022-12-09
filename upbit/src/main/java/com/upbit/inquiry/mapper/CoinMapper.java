@@ -10,7 +10,7 @@ import com.upbit.inquiry.DTO.CoinDTO;
 public interface CoinMapper {
 
 	//랭킹가져오기
-	List<CoinDTO> rankingSelect();
+	List<CoinDTO> rankingSelect() throws Exception;
 	
 	
 	

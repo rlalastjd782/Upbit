@@ -85,9 +85,9 @@
 		</thead>
 		
 		<tbody >
-				<tr id = "trmodel" th:each = "items : ${model}">
+				<tr id = "trmodel" th:each = "items : ${model}" >
 					<td th:text = "${items.korean_name}"></td>
-		 			<td th:text = "${items.trade_price}"></td>
+		 			<td id = "trmodeldata" th:text = "${items.trade_price}"></td>
 					<td th:text = "${items.candle_acc_trade_price}"></td>
 					<td th:text = "${items.candle_date_time_kst}"></td>
 					<td th:text = "${items.ranking}"></td> 
@@ -110,8 +110,7 @@
 
 /*<![CDATA[*/	
 		
-	
-	
+
 
    /*]]>*/
 </script>
