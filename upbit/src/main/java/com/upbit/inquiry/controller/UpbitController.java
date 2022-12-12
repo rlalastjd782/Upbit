@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.upbit.inquiry.DTO.CoinRequest;
 import com.upbit.inquiry.DTO.CoinResponse;
@@ -49,11 +48,15 @@ public class UpbitController {
 			
 		}
 		
-		@PostMapping("/coinRate")
-		public String coinRateSelect(CoinRequest coinParam) {
-			CoinResponse coin = new CoinResponse();
-			coin.setTrade_price(coinParam.getTrade_price());
-			System.out.println(coin.toString());
+		@PostMapping(value = "/coinRate")
+		public String coinRateSelect(String inputText, Model model) throws Exception {
+			CoinRequest coinReq = new CoinRequest();
+			System.out.println("난 2번이다");
+			coinReq.setCandle_date_time_kst(inputText);
+			System.out.println(coinReq);
+			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking2(coinReq);
+			model.addAttribute("model",coinRankingList);
+			System.out.println(coinRankingList);
 			return "api/coinRate";
 		}
 		
@@ -61,9 +64,9 @@ public class UpbitController {
 		
 		@GetMapping(value = "/coinRate")
 		public String coinRatePage(String all,Model model) throws Exception{
+			System.out.println("난1번이야");
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking();
 			model.addAttribute("model",coinRankingList);
-			
 			return "api/coinRate";
 			
 		}

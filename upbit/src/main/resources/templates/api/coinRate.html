@@ -72,12 +72,15 @@
 	
 	</select>  -->
 	<!-- 달력추가 -->	
-	<form id = "formsend" onsubmit="return false;" action = "/coinRate" method="post">
+
 		<input type='date' name='userBirthday' class = 'date' />
 		<input type='time' name='time' value = "00:00:00"/>
-		<button type= 'submit' name ="selectDate" id = 'select' >검색</button>
-		
-	</form>
+		<input type= 'submit' name ="selectDate" id = 'select' value = "검색">
+
+
+
+
+
 	<table class="table" id="dataMarket">
 	
 		<thead>
@@ -116,25 +119,51 @@
 /*<![CDATA[*/	
 		
 	// 시간 초기화 부분 (db에서 검색할 부분)
+	
+	
+
+			
+		
+
 		$('#select').on('click', function(){
 			var inputText = $('input[name=userBirthday]').val();
 			var inputText2 = $('input[name=time]').val();
-			
 			var t1 = inputText2[0];
 			var t2 = inputText2[1];
 			console.log(t1)
 			console.log(t2)
-			inputText2 = t1 + t2+ ":00";			
-	
+			inputText2 = t1 + t2+ ":00";	
 			
 			var inputText3 = inputText + "T" + inputText2 + ":00";
-			console.log(inputText3)
-			document.getElementById('formsend').submit();
+	
+			coinselect(inputText3)
+		
 			
-			return inputText3;
+			
+			
+		    
 		})
 		
-
+		
+		
+		
+		function coinselect(inputText){
+		    let obj;
+		    obj = document.createElement('input');
+		   
+		    obj.setAttribute('name', 'inputText');
+		    obj.setAttribute('value', inputText);
+			console.log(obj)
+		    let f = document.createElement('form');
+		    f.appendChild(obj);
+		    
+		    
+		    f.setAttribute('method', 'POST');
+		    f.setAttribute('action', 'coinRate');
+		    console.log(f)
+ 		    document.body.appendChild(f);
+		    f.submit();
+		} 
 		
 
 		

@@ -14,5 +14,6 @@ public interface CoinMapper {
 	List<CoinResponse> rankingSelect() throws Exception;
 	
 	
-	void select(CoinRequest coin);
+	List<CoinResponse> rankingSelect2(CoinRequest coin) throws Exception;
+	
 }
