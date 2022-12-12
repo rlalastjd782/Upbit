@@ -53,7 +53,7 @@ public class UpbitController {
 		public String coinRateSelect(CoinRequest coinParam) {
 			CoinResponse coin = new CoinResponse();
 			coin.setTrade_price(coinParam.getTrade_price());
-			
+			System.out.println(coin.toString());
 			return "api/coinRate";
 		}
 		
@@ -63,6 +63,7 @@ public class UpbitController {
 		public String coinRatePage(String all,Model model) throws Exception{
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking();
 			model.addAttribute("model",coinRankingList);
+			
 			return "api/coinRate";
 			
 		}
