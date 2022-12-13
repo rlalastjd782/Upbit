@@ -56,55 +56,49 @@
 			</div>
 		</div>
 	</nav>
-<!-- 
-	<select id="upbitAll">
-		<option value="">코인을 골라주세요</option>
-		<option id='coinName' th:each="items: ${model}"
-			th:value="${items.korean_name}" th:text="${items.korean_name}"></option>
-	
-	</select> -->
-	
-
-
-<!-- 		<select id="upbitAll4">
-		<option value="">코인을 골라주세요</option>
-		<option th:value="${data.market}" th:text="${data.market}"></option>
-	
-	</select>  -->
 	<!-- 달력추가 -->	
-
+	<div id = "calender" style="margin:8px;">
+		<div> 원하는시간을 검색하세요</div>
 		<input type='date' name='userBirthday' class = 'date' />
 		<input type='time' name='time' value = "00:00:00"/>
 		<input type= 'submit' name ="selectDate" id = 'select' value = "검색">
+	</div>
+
+	<form class = "input" id = "form" method="POST" action="coinRate">
+		<input name = "inputText" value = "">
+	</form>
 
 
+	<div style="width:50%; float:left;">
 
-
-
-	<table class="table" id="dataMarket">
-	
-		<thead>
-			<tr >
-				<th scope="col">코인이름</th>
-				<th scope="col">코인가격(종가)</th>
-				<th scope="col">거래대금</th>
-				<th scope="col">거래시간</th>
-				<th scope="col">랭킹</th>
-			</tr>
-		</thead>
+		<table class="table" id="dataMarket">
 		
-		<tbody >
-				<tr id = "trmodel" th:each = "items : ${model}" >
-					<td th:text = "${items.korean_name}"></td>
-		 			<td id = "trmodeldata" th:text = "${items.trade_price}"></td>
-					<td th:text = "${items.candle_acc_trade_price}"></td>
-					<td th:text = "${items.candle_date_time_kst}"></td>
-					<td th:text = "${items.ranking}"></td> 
+			<thead>
+				<tr >
+					<th scope="col">코인이름</th>
+					<th scope="col">코인가격(종가)</th>
+					<th scope="col">거래대금</th>
+					<th scope="col">거래시간</th>
+					<th scope="col">랭킹</th>
 				</tr>
-		</tbody>
-	</table>
+			</thead>
+			
+			<tbody >
+					<tr id = "trmodel" th:each = "items : ${getModel}" >
+						<td th:text = "${items.korean_name}"></td>
+			 			<td id = "trmodeldata" th:text = "${items.trade_price}"></td>
+						<td th:text = "${items.candle_acc_trade_price}"></td>
+						<td th:text = "${items.candle_date_time_kst}"></td>
+						<td th:text = "${items.ranking}"></td> 
+					</tr>
+			</tbody>
+		</table>
+	</div>
 	
-
+	<div style="width:50%; float:right;">
+		<table class="table" id="data">
+		</table>	
+	</div>
 
 	
 
@@ -120,49 +114,53 @@
 		
 	// 시간 초기화 부분 (db에서 검색할 부분)
 	
+	$("form").hide();
+
+	
 	
 
-			
-		
-
 		$('#select').on('click', function(){
-			var inputText = $('input[name=userBirthday]').val();
-			var inputText2 = $('input[name=time]').val();
-			var t1 = inputText2[0];
-			var t2 = inputText2[1];
+			
+			let inputText = $('input[name=userBirthday]').val();
+			let inputText2 = $('input[name=time]').val();
+			let t1 = inputText2[0];
+			let t2 = inputText2[1];
 			console.log(t1)
 			console.log(t2)
 			inputText2 = t1 + t2+ ":00";	
-			
-			var inputText3 = inputText + "T" + inputText2 + ":00";
-	
-			coinselect(inputText3)
-		
-			
-			
-			
+			let inputText3 = inputText + "T" + inputText2 + ":00";
+			let data = $('input[name=inputText]').val(inputText3)
+		/* 	let f = document.getElementById('form');
+		    f.submit(); */
+		    
+		    $.ajax({
+		    
+		    	type : 'post',
+		    	url : '/coinRateSend',
+		    	dataType :"text",
+		    	data : data,
+		    	success : function(res){
+		    		console.log(res);
+					html = res;
+					$("#data").append(html);
+		    	
+		    	},
+		    	error : function(res){
+		    		alert(res)
+		    	}
+		    	
+		   
+		    })
+		 	$('#data').empty();
 		    
 		})
 		
 		
+	
+	
 		
-	// postmapping 로 넘기기
-		function coinselect(inputText){
-		    let obj;
-		    obj = document.createElement('input');
-		   
-		    obj.setAttribute('name', 'inputText');
-		    obj.setAttribute('value', inputText);
-			console.log(obj)
-		    let f = document.createElement('form');
-		    f.appendChild(obj);
-		    f.setAttribute('method', 'POST');
-		    f.setAttribute('action', 'coinRate');
-		    console.log(f)
- 		    document.body.appendChild(f);
-		    f.submit();
-		} 
 		
+
 
 		
 
