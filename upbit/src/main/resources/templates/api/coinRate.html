@@ -58,7 +58,9 @@
 	</nav>
 	<!-- 달력추가 -->	
 	<div id = "calender" style="margin:8px;">
-		<div> 원하는시간을 검색하세요</div>
+		<div> 원하는시간을 검색하세요
+		<br>
+			한시간단위의 거래량이기 때문에 업비트에서 확인하는 실시간 거래량과 다를수있습니다.</div>
 		<input type='date' name='userBirthday' class = 'date' />
 		<input type='time' name='time' value = "00:00:00"/>
 		<input type= 'submit' name ="selectDate" id = 'select' value = "검색">
@@ -70,7 +72,8 @@
 
 
 	<div style="width:50%; float:left;">
-		<div>현재시간</div>
+		<div>현재시간(1시간단위)
+			</div>
 		<table class="table" id="dataSelect">
 		
 			<thead>
@@ -81,7 +84,7 @@
 					<th scope="col">거래대금</th>
 					<th scope="col">거래시간</th>
 					<th scope="col">랭킹</th>
-					<th scope="col" >순위변동</th>
+					<th scope="col" >순위변동(기준시간대비)</th>
 				</tr>
 			</thead>
 			
@@ -119,7 +122,10 @@
 	// 시간 초기화 부분 (db에서 검색할 부분)
 	
 	$("form").hide();
-
+	  
+	let rank = [[ ${getmodel} ]];
+	console.log(rank);
+	
 	
 	
 
@@ -137,6 +143,8 @@
 		/* 	let f = document.getElementById('form');
 		    f.submit(); */
 		    
+		  
+		    
 		    $.ajax({
 		    
 		    	type : 'post',
@@ -145,8 +153,16 @@
 		    	data : data,
 		    	success : function(res){
 		    		html = res;
-					
 					$("#data").append(html);
+
+					
+					let dataText = $("#data").val();
+					console.log(dataText);
+					
+				
+					
+					
+					
 					
 		    	},
 		    	error : function(res){
@@ -161,9 +177,7 @@
 		})
 		
 		
-	
-	
-		
+
 		
 
 
