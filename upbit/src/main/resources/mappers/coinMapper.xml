@@ -11,7 +11,7 @@
 		, ranking
 	</sql>
 
-	
+	<!--맨처음화면  -->
 		<!-- 	당일 08시 기준으로 변경 (기준값) 맨처음 들어갔을때의 기준 거래량 순위-->
 	<select id = "rankingSelect" parameterType = "com.upbit.inquiry.DTO.CoinResponse"  resultType = "com.upbit.inquiry.DTO.CoinResponse">
 		SELECT
@@ -27,6 +27,8 @@
 			candle_date_time_kst  = concat( LEFT((replace (CURRENT_TIMESTAMP, " ", "T")),11),"08:00:00") and cmt.market = cat.market 
 	</select>
 	
+<!-- 	post 포지션 이후 화면 --> 
+	<!-- 오른쪽 화면 -->
 	<!-- post 포지션 시간 검색하면 검색되게 나옴 -->
 	<select id = "rankingSelect2" parameterType = "com.upbit.inquiry.DTO.CoinRequest"  resultType = "com.upbit.inquiry.DTO.CoinResponse">
 		SELECT
@@ -41,6 +43,23 @@
 		WHERE
 			candle_date_time_kst  = #{candle_date_time_kst} and cmt.market = cat.market 
 	</select>
+	
+<!-- 	내가선택한날짜의 08시 기준으로 보여주기 -->
+	<select id = "rankingSelect3" parameterType = "com.upbit.inquiry.DTO.CoinRequest"  resultType = "com.upbit.inquiry.DTO.CoinResponse">
+		SELECT
+			cat.korean_name,
+			cmt.candle_date_time_kst ,
+			cmt.candle_acc_trade_price ,
+			cmt.trade_price 
+			,rank() over(order by candle_acc_trade_price desc) as ranking
+		FROM
+			coin_minutes_table cmt,
+			coin_all_table cat 
+		WHERE
+			candle_date_time_kst  = concat( LEFT( #{candle_date_time_kst} ,11),"08:00:00") and cmt.market = cat.market 
+	</select>
+	
+	
 	
 	
 </mapper>
