@@ -53,24 +53,11 @@ public class UpbitController {
 			CoinRequest coinReq = new CoinRequest();
 			System.out.println("난 2번이다");
 			coinReq.setCandle_date_time_kst(inputText);
-			System.out.println(coinReq);
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking2(coinReq);
-			List<CoinResponse> coinRankingList2 = coinServiceImpl.coinRanking3(coinReq);
 			model.addAttribute("postModel",coinRankingList);
-			model.addAttribute("postModel2",coinRankingList2);
-			System.out.println(coinRankingList);
 			return "api/coinRateSend";
 		}
-		@PostMapping(value = "/coinRateSend2")
-		public String coinRateSelect2(String inputText, Model model) throws Exception {
-			CoinRequest coinReq = new CoinRequest();
-			System.out.println("난 3번이다");
-			coinReq.setCandle_date_time_kst(inputText);
-			System.out.println(coinReq);
-			List<CoinResponse> coinRankingList2 = coinServiceImpl.coinRanking3(coinReq);
-			model.addAttribute("postModel2",coinRankingList2);
-			return "api/coinRateSend2";
-		}
+
 		
 		
 		
@@ -78,6 +65,7 @@ public class UpbitController {
 		public String coinRatePage(String all,Model model) throws Exception{
 			System.out.println("난1번이야");
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking();
+			System.out.println(coinRankingList);
 			model.addAttribute("getModel",coinRankingList);
 			return "api/coinRate";
 			

@@ -70,7 +70,7 @@
 
 
 	<div style="width:50%; float:left;">
-
+		<div>현재시간</div>
 		<table class="table" id="dataSelect">
 		
 			<thead>
@@ -92,13 +92,14 @@
 						<td th:text = "${items.candle_acc_trade_price}"></td>
 						<td th:text = "${items.candle_date_time_kst}"></td>
 						<td id = "rank" th:text = "${items.ranking}" th:value="${items.ranking}"></td> 
-						<td th:text = "0"></td>
+						<td id = "rankdiff"th:text = "0"></td>
 					</tr>
 			</tbody>
 		</table>
 	</div>
 	
 	<div style="width:50%; float:right;">
+	<div>선택시간(기준시간)</div>
 		<table class="table" id="data">
 		</table>	
 	</div>
@@ -154,30 +155,7 @@
 		    	
 		   
 		    })
-		    
-		   $.ajax({
-		    
-		    	type : 'post',
-		    	url : '/coinRateSend2',
-		    	dataType :"text",
-		    	data : data,
-		    	success : function(res){
-		    		$("#dataSelect").empty();
-		    		console.log(res)
-		    		html = res;
-					$("#dataSelect").append(html);
-					
-		    	},
-		    	error : function(res){
-		    		alert(res)
-		    	}
-		    	
-		   
-		    })
-		    
-		    
-		    
-		    $("#dataSelect").empty();
+
 		 	$('#data').empty();
 		    
 		})

@@ -31,13 +31,6 @@ public class CoinServiceImpl implements CoinService {
 			System.out.println(coinDTOList);
 			return coinDTOList;
 		}
-	
-		public List<CoinResponse> coinRanking3(CoinRequest coin) throws Exception {
-			System.out.println("나는 랭킹 3번이다");
-			List<CoinResponse> coinDTOList = coinMapper.rankingSelect3(coin);
-			System.out.println(coinDTOList);
-			return coinDTOList;
-		}
-	
+
 		
 }
