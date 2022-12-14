@@ -5,6 +5,8 @@ package com.upbit.inquiry.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.upbit.inquiry.DTO.CoinRequest;
 import com.upbit.inquiry.DTO.CoinResponse;
 import com.upbit.inquiry.DTO.MainDTO;
@@ -50,13 +53,18 @@ public class UpbitController {
 		}
 		
 		@PostMapping(value = "/coinRateSend")
-		public String coinRateSelect(String inputText, Model model) throws Exception {
+		public JSONObject coinRateSelect(String inputText, Model model) throws Exception {
+			JSONParser parser = new JSONParser();
+			
 			CoinRequest coinReq = new CoinRequest();
 			System.out.println("난 2번이다");
 			coinReq.setCandle_date_time_kst(inputText);
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking2(coinReq);
-			model.addAttribute("postModel",coinRankingList);
-			return "api/coinRateSend";
+			System.out.println("난누굴까아아아아아아아아앙아아아"+coinRankingList.toString());
+			Object obj = parser.parse(coinRankingList.toString());
+			System.out.println("나는 오브젝트이다아아아아아" + obj);
+			JSONObject list = (JSONObject) obj;
+			return list;
 		}
 
 		
