@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -62,7 +63,7 @@ public class UpbitController {
 		
 		
 		@GetMapping(value = "/coinRate")
-		public String coinRatePage(String all,Model model) throws Exception{
+		public String coinRatePage(@ModelAttribute("getModel")String all,Model model) throws Exception{
 			System.out.println("난1번이야");
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking();
 			System.out.println(coinRankingList);
