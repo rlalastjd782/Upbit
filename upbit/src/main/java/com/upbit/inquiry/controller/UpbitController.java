@@ -66,7 +66,7 @@ public class UpbitController {
 			List<CoinResponse> coinRankingList = coinServiceImpl.coinRanking2(coinReq);
 			// 랭킹리스트 get 으로 빼기(for문을 이용해서 빼보기
 			
-			for (int i = 0; i< coinRankingList.size(); i++) {
+			for (int i = 0; i<coinRankingList.size(); i++) {
 				JSONObject jo = new JSONObject();
 				String korean_name = coinRankingList.get(i).getKorean_name();
 				String candle_date_time_kst = coinRankingList.get(i).getCandle_date_time_kst();
