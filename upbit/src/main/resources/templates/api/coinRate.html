@@ -75,7 +75,7 @@
 	<div style="width:50%; float:left;">
 		<div>현재시간(1시간단위)
 			</div>
-		<table class="table" id="dataSelect">
+		<table class="table" id="dataDefault">
 		
 			<thead>
 			
@@ -104,7 +104,25 @@
 	
 	<div style="width:50%; float:right;">
 	<div>선택시간(기준시간)</div>
-		<table class="table" id="data">
+		<table class="table" id = "data" >
+				<thead>
+			
+				<tr >
+					<th scope="col">코인이름</th>
+					<th scope="col">코인가격(종가)</th>
+					<th scope="col">거래대금</th>
+					<th scope="col">거래시간</th>
+					<th scope="col">랭킹</th>
+					<th scope="col" >순위변동(기준시간대비)</th>
+				</tr>
+			</thead>
+			
+			<tbody id = "dataSelect">
+			</tbody>
+			
+			
+			
+		
 		</table>	
 	</div>
 
@@ -125,7 +143,6 @@
 	$("form").hide();
 
 			let getModelval = [[${getModel}]];
-			console.log(getModelval)
 		
 
 		$('#select').on('click', function(){
@@ -142,8 +159,6 @@
 		/* 	let f = document.getElementById('form');
 		    f.submit(); */
 		    
-		  
-		    
 		    $.ajax({
 		    
 		    	type : 'post',
@@ -151,21 +166,68 @@
 		    	dataType :"json",
 		    	data : data,
 		    	success : function(res){
+		    		$("#dataSelect").empty();
+		 			
 		    		console.log(res)
-					
+					console.log(getModelval)
+		    		let market = [];
+		    		let candle_acc_trade_price = [];
+		    		let candle_date_time_kst = [];
+		    		let ranking =[];
+		    		let trade_Price = [];
+		
+		    		for(i=0; i<res.length; i++){
+		    			market.push(res[i].korean_name);
+		    			candle_acc_trade_price.push(res[i].candle_acc_trade_price);
+		    			candle_date_time_kst.push(res[i].candle_date_time_kst);
+		    			ranking.push(res[i].ranking);
+		    			trade_Price.push(res[i].trade_Price);
+						html = 
+							  "<tr><td>" + res[i].korean_name + "</td>"
+							 	 + "<td>" + res[i].trade_Price + "</td>" 
+							 	+ "<td>" + res[i].candle_acc_trade_price + "</td>"
+								+ "<td>" + res[i].candle_date_time_kst + "</td>"
+								+ "<td>" +  res[i].ranking + "</td>" 
+								+ "<td>0</td></tr>" 
+							 $("#data").append(html)
+						}					    		
+		    		
+		    			// 왼쪽화면 이름과 랭킹 
+		    		let defMarket = [];
+		    		let defRanking = [];
+		    		let def = {};
+		    		let aftMarket = [];
+		    		let aftRanking = [];
+		    		let aft = {};
+		    		for(i =0; i<getModelval.length; i++){
+		    			defMarket.push(getModelval[i].korean_name);
+		    			defRanking.push(getModelval[i].ranking);
+		    			aftMarket.push(res[i].korean_name);
+		    			aftRanking.push(res[i].ranking);
+		    			
+		    			def[defMarket[i]] = defRanking[i];
+		    			aft[aftMarket[i]] = aftRanking[i];
+		    		}	
+		    		console.log(def)
+		    		console.log(aft)
+		    		
+		    		// 키값이 같을때 밸류값을 - 해서 화면에 나오게 하기 rankdiff-> value 값 변경
+		    		
+		    		
+		    		
+		    		
+		    		
+		    	 	
 		    	},
 		    	error : function(res){
 		    		alert(res)
 		    	}
-		    	
-		   
 		    })
-
-		 	$('#data').empty();
 		    
-		})
+		    
 		
 		
+		})	
 
 		
 

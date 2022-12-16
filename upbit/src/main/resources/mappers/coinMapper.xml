@@ -24,7 +24,7 @@
 			coin_minutes_table cmt,
 			coin_all_table cat 
 		WHERE
-			candle_date_time_kst  = concat( LEFT((replace (CURRENT_TIMESTAMP, " ", "T")),13),":00:00") and cmt.market = cat.market 
+			candle_date_time_kst  = concat( LEFT((replace (DATE_SUB(CURRENT_TIMESTAMP, interval 1 hour), " ", "T")),13),":00:00") and cmt.market = cat.market 
 	</select>
 	
 <!-- 	post 포지션 이후 화면 --> 
