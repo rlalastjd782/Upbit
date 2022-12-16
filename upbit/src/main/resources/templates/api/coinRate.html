@@ -57,7 +57,6 @@
 		</div>
 	</nav>
 	<!-- 달력추가 -->	
-	<input type="hidden" id = "getmodel"name="name" th:value="${getModel}">
 	<div id = "calender" style="margin:8px;">
 		<div> 원하는시간을 검색하세요
 		<br>
@@ -89,15 +88,7 @@
 				</tr>
 			</thead>
 			
-			<tbody >
-					<tr id = "trmodel" th:each = "items : ${getModel}" >
-						<td th:text = "${items.korean_name}"></td>
-			 			<td id = "trmodeldata" th:text = "${items.trade_price}"></td>
-						<td th:text = "${items.candle_acc_trade_price}"></td>
-						<td th:text = "${items.candle_date_time_kst}"></td>
-						<td id = "rank" th:text = "${items.ranking}" th:value="${items.ranking}"></td> 
-						<td id = "rankdiff"th:text = "0"></td>
-					</tr>
+			<tbody id = "trmodel" >
 			</tbody>
 		</table>
 	</div>
@@ -142,11 +133,24 @@
 
 	$("form").hide();
 
-			let getModelval = [[${getModel}]];
+	let getModelval = [[${getModel}]];
+	let html = "";
+	for(i=0; i<getModelval.length; i++){
+		html += 
+			  "<tr id = "+"rank"+i+"><td>" + getModelval[i].korean_name + "</td>"
+			 	 + "<td>" + getModelval[i].trade_price + "</td>" 
+			 	+ "<td>" + getModelval[i].candle_acc_trade_price + "</td>"
+				+ "<td>" + getModelval[i].candle_date_time_kst + "</td>"
+				+ "<td>" +  getModelval[i].ranking + "</td></tr>"
 		
+		
+		}
+	
+	 $("#trmodel").append(html)
+	
 
 		$('#select').on('click', function(){
-			
+	    
 			let inputText = $('input[name=userBirthday]').val();
 			let inputText2 = $('input[name=time]').val();
 			let t1 = inputText2[0];
@@ -166,30 +170,23 @@
 		    	dataType :"json",
 		    	data : data,
 		    	success : function(res){
+		    		$("#rankInt").empty();
 		    		$("#dataSelect").empty();
 		 			
 		    		console.log(res)
 					console.log(getModelval)
 		    		let market = [];
-		    		let candle_acc_trade_price = [];
-		    		let candle_date_time_kst = [];
-		    		let ranking =[];
-		    		let trade_Price = [];
 		
 		    		for(i=0; i<res.length; i++){
 		    			market.push(res[i].korean_name);
-		    			candle_acc_trade_price.push(res[i].candle_acc_trade_price);
-		    			candle_date_time_kst.push(res[i].candle_date_time_kst);
-		    			ranking.push(res[i].ranking);
-		    			trade_Price.push(res[i].trade_Price);
-						html = 
+						html3 = 
 							  "<tr><td>" + res[i].korean_name + "</td>"
 							 	 + "<td>" + res[i].trade_Price + "</td>" 
 							 	+ "<td>" + res[i].candle_acc_trade_price + "</td>"
 								+ "<td>" + res[i].candle_date_time_kst + "</td>"
 								+ "<td>" +  res[i].ranking + "</td>" 
 								+ "<td>0</td></tr>" 
-							 $("#data").append(html)
+							 $("#data").append(html3)
 						}					    		
 		    		
 		    			// 왼쪽화면 이름과 랭킹 
@@ -204,31 +201,47 @@
 		    			defRanking.push(getModelval[i].ranking);
 		    			aftMarket.push(res[i].korean_name);
 		    			aftRanking.push(res[i].ranking);
-		    			
 		    			def[defMarket[i]] = defRanking[i];
 		    			aft[aftMarket[i]] = aftRanking[i];
 		    		}	
-		    		console.log(def)
-		    		console.log(aft)
 		    		
 		    		// 키값이 같을때 밸류값을 - 해서 화면에 나오게 하기 rankdiff-> value 값 변경
+		    		// 키값에 대한 밸류의 차이를 가져오기
+					// 키값은 같아야된다.
+					// 밸류의 차이는 같은 키값일때 차이가 나온다
+					let diff = {};
+		    		for(i=0; i<res.length; i++){
+		    			let rank = aft[defMarket[i]]- def[defMarket[i]];
+		    			diff[defMarket[i]] = rank
+		    			
+		    		}
+		    		console.log(diff[defMarket[2]] )
 		    		
-		    		
-		    		
-		    		
-		    		
-		    	 	
+		    		var html2 = "";
+		    		for(i=0; i<getModelval.length; i++){
+			  		    	$("#rank"+i).remove("#rankInt");
+			  		   }
+			      		
+		    		for(i=0; i<res.length; i++){
+		    			html2 = "<td id = 'rankInt'>"+ diff[defMarket[i]] + "</td>" ;
+		    			$("#rank"+[i]).append(html2);
+		    			
+		    			
+		    		}
+		    	
+		    	    
 		    	},
 		    	error : function(res){
 		    		alert(res)
 		    	}
+		    	
 		    })
-		    
-		    
-		
-		
+		  
+	  
 		})	
-
+	
+	
+		
 		
 
 
