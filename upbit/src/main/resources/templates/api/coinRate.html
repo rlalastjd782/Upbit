@@ -150,10 +150,6 @@
 	
 
 		$('#select').on('click', function(){
-		
-			
-			
-		
 			let inputText = $('input[name=userBirthday]').val();
 			let inputText2 = $('input[name=time]').val();
 			let t1 = inputText2[0];
@@ -166,12 +162,7 @@
 		   	for(i=0; i<getModelval.length; i++){
 		   		$("#rankInt"+i).remove()
 		   	}
-		    
-		    
-		    
-		    
 		    $.ajax({
-		    
 		    	type : 'post',
 		    	url : 'coinRate',
 		    	dataType :"json",
@@ -179,12 +170,9 @@
 		    	success : function(res){
 		    		$("#rankInt").empty();
 		    		$("#dataSelect").empty();
-		 			
 		    		let market = [];
 				// 오른쪽 화면
 		    		for(i=0; i<res.length; i++){
-		    			
-		    			
 		    			market.push(res[i].korean_name);
 						html3 = 
 							  "<tr><td>" + res[i].korean_name + "</td>"
@@ -206,7 +194,6 @@
 		    		for(i =0; i<getModelval.length; i++){
 		    			defMarket.push(getModelval[i].korean_name);
 		    			defRanking.push(getModelval[i].ranking);
-		    			
 		    			if(res[i]==null){
 		    				continue;
 		    			}
@@ -224,9 +211,9 @@
 					// 밸류의 차이는 같은 키값일때 차이가 나온다
 					let diff = {};
 		    		for(i=0; i<getModelval.length; i++){
-		    			let rank = aft[defMarket[i]]- def[defMarket[i]];
+		    			let rank = aft[getModelval[i].korean_name]-def[getModelval[i].korean_name] ;
+			    		console.log(rank)
 		    			diff[defMarket[i]] = rank
-		    			  
 		    		}
 		    		console.log(diff)
 		    		
@@ -238,11 +225,7 @@
 		    		for(i=0; i<getModelval.length; i++){
 		    			html2 = "<td id ="+ "rankInt"+i+">"+ diff[defMarket[i]] + "</td>" ;
 		    			$("#rank"+[i]).append(html2);
-		    			
-		    			
 		    		}
-		    		
-		    	    
 		    	},
 		    	error : function(res){
 		    		alert(res)
