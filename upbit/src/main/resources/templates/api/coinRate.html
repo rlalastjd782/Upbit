@@ -150,18 +150,25 @@
 	
 
 		$('#select').on('click', function(){
-	    
+		
+			
+			
+		
 			let inputText = $('input[name=userBirthday]').val();
 			let inputText2 = $('input[name=time]').val();
 			let t1 = inputText2[0];
 			let t2 = inputText2[1];
-			console.log(t1)
-			console.log(t2)
 			inputText2 = t1 + t2+ ":00";	
 			let inputText3 = inputText + "T" + inputText2 + ":00";
 			let data = $('input[name=inputText]').val(inputText3)
 		/* 	let f = document.getElementById('form');
 		    f.submit(); */
+		   	for(i=0; i<getModelval.length; i++){
+		   		$("#rankInt"+i).remove()
+		   	}
+		    
+		    
+		    
 		    
 		    $.ajax({
 		    
@@ -173,11 +180,11 @@
 		    		$("#rankInt").empty();
 		    		$("#dataSelect").empty();
 		 			
-		    		console.log(res)
-					console.log(getModelval)
 		    		let market = [];
-		
+				// 오른쪽 화면
 		    		for(i=0; i<res.length; i++){
+		    			
+		    			
 		    			market.push(res[i].korean_name);
 						html3 = 
 							  "<tr><td>" + res[i].korean_name + "</td>"
@@ -199,36 +206,42 @@
 		    		for(i =0; i<getModelval.length; i++){
 		    			defMarket.push(getModelval[i].korean_name);
 		    			defRanking.push(getModelval[i].ranking);
-		    			aftMarket.push(res[i].korean_name);
-		    			aftRanking.push(res[i].ranking);
+		    			
+		    			if(res[i]==null){
+		    				continue;
+		    			}
+		    			else{
+		    				aftMarket.push(res[i].korean_name);
+		    				aftRanking.push(res[i].ranking);
+		    			}
 		    			def[defMarket[i]] = defRanking[i];
 		    			aft[aftMarket[i]] = aftRanking[i];
 		    		}	
-		    		
+		    		console.log(defMarket)
 		    		// 키값이 같을때 밸류값을 - 해서 화면에 나오게 하기 rankdiff-> value 값 변경
 		    		// 키값에 대한 밸류의 차이를 가져오기
 					// 키값은 같아야된다.
 					// 밸류의 차이는 같은 키값일때 차이가 나온다
 					let diff = {};
-		    		for(i=0; i<res.length; i++){
+		    		for(i=0; i<getModelval.length; i++){
 		    			let rank = aft[defMarket[i]]- def[defMarket[i]];
 		    			diff[defMarket[i]] = rank
-		    			
+		    			  
 		    		}
-		    		console.log(diff[defMarket[2]] )
+		    		console.log(diff)
 		    		
 		    		var html2 = "";
 		    		for(i=0; i<getModelval.length; i++){
 			  		    	$("#rank"+i).remove("#rankInt");
 			  		   }
 			      		
-		    		for(i=0; i<res.length; i++){
-		    			html2 = "<td id = 'rankInt'>"+ diff[defMarket[i]] + "</td>" ;
+		    		for(i=0; i<getModelval.length; i++){
+		    			html2 = "<td id ="+ "rankInt"+i+">"+ diff[defMarket[i]] + "</td>" ;
 		    			$("#rank"+[i]).append(html2);
 		    			
 		    			
 		    		}
-		    	
+		    		
 		    	    
 		    	},
 		    	error : function(res){
@@ -236,10 +249,9 @@
 		    	}
 		    	
 		    })
-		  
-	  
-		})	
 	
+		})	
+
 	
 		
 		
