@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<!-- CSS only -->
+CSS only
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -14,7 +14,8 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script><base>
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<base>
 
 <title>Welcome Coin</title>
 </head>
@@ -30,47 +31,51 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarColor01">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" th:href=@{/}>Home</a></li>
-					<li class="nav-item"><a class="nav-link"
-						th:href=@{/v1/market/all}>코인상세정보</a></li>
-					<li class="nav-item"><a class="nav-link" th:href=@{/graph}>코인그래프</a>
-					<li class="nav-item"><a class="nav-link"
-						th:href="@{/analysis}">상승하락급등분석</a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/ticker}">전체상승하락</a>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href=@{/}>Home</a>
 					</li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/tick}">주간상승률</a>
+					<li class="nav-item">
+						<a class="nav-link" th:href=@{/v1/market/all}>코인상세정보</a>
 					</li>
-
-						<li class="nav-item"><a class="nav-link" th:href="@{/calendar}">코인달력</a>
+					<li class="nav-item">
+						<a class="nav-link" th:href=@{/graph}>코인그래프</a>
 					</li>
-						<li class="nav-item"><a class="nav-link" th:href="@{/grayscale}">그레이스케일포트폴리오</a>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/analysis}">상승하락급등분석</a>
 					</li>
-								<li class="nav-item"><a class="nav-link" th:href="@{/coinRate}">급등급락</a>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/ticker}">전체상승하락</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/tick}">주간상승률</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/calendar}">코인달력</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/grayscale}">그레이스케일포트폴리오</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/coinRate}">급등급락</a>
 					</li>
 				</ul>
 				<form class="d-flex">
-					<input class="form-control me-2" type="search" placeholder="Search"
-						aria-label="Search">
+					<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-light" type="submit">Search</button>
 				</form>
-			</div>
-		</div>
+			</div> <!-- navbarColor01...end -->
+		</div> <!-- container-fluid...end -->
 	</nav>
-	<button id ="reset" >리이셋</button>
+	<button type="button" id="reset">리이셋</button>
 	<h1>상승코인 top 15</h1>
 
-	<select id="upbitAll" >
+	<select id="upbitAll">
 		<option value="">코인을 골라주세요</option>
-		<option id='coinName' th:each="items: ${model}"
-			th:if="${#strings.contains(items.market,'KRW')}"
-			th:value="${items.market}" th:text="${items.korean_name}"></option>
-	
+		<option id='coinName' th:each="items: ${model}" th:if="${#strings.contains(items.market,'KRW')}"
+			th:value="${items.market}" th:text="${items.korean_name}">
+		</option>
 	</select>
 
-	
-
-	
 	<table class="table" id="dataMarket">
 		<thead>
 			<tr>
@@ -85,7 +90,7 @@
 		</thead>
 	</table>
 	<h1>하락코인 top 15</h1>
-		<table class="table" id="dataMarketDown">
+	<table class="table" id="dataMarketDown">
 		<thead>
 			<tr>
 				<th scope="col">코인이름</th>
@@ -97,12 +102,7 @@
 				<th scope="col">상승보합정보</th>
 			</tr>
 		</thead>
-	</table>
-	
-	
-
-
-	
+	</table> 
 
 	<!-- JavaScript Bundle with Popper -->
 	<script
@@ -111,85 +111,84 @@
 		crossorigin="anonymous"></script>
 
 	<script>
-
-/*<![CDATA[*/	
-	var click = 0 ;
-	
-	$('select').hide();
-	$('#reset').hide();
-
-		$('document').ready(function(){
-			
-			
-			click +=1;
+		/*<![CDATA[*/
+		var click = 0;
+		$('select').hide();
+		$('#reset').hide();
+		$('document').ready(function() {
+			click += 1;
 			var selectMarketName = $('select').val();
+			/* console.log("[START] selectMarketName")
+			console.log(selectMarketName)
+			console.log("[END] selectMarketName") */
+			
 			var coinEngName;
 			var coinEngNameList = [];
-			
-			coinEngName = $('select').find('option').map(function(){
-			   	return $(this).val();
+			coinEngName = $('select').find('option').map(function() {
+				return $(this).val(); // 코인 영어 이름 리턴
 			});
-			for (let i=1; i<=coinEngName.length; i++){
-				coinEngNameList.push(coinEngName[i]);
+			
+
+			for (let i = 1; i <= coinEngName.length; i++) { // coinEngName[0] 비어있음
+				coinEngNameList.push(coinEngName[i]);		
 			}
+			
 			//마지막 언디파인트 빼기
-			coinEngNameList.splice(coinEngNameList.length -1)
-		
-		
-		
+			coinEngNameList.splice(coinEngNameList.length - 1) // 배열에서 마지막 요소를 제거하는 코드
+
+							
 			ajaxData();
 			
-		
-			$("#reset").click(function(){
+			$("#reset").click(function() {
 				ajaxData();
 				$('tbody').empty();
 			})
-			
-			setInterval(function(){
+
+// 			setInterval(function() {
+// 				$('#reset').trigger('click');
+// 			}, 5000);
+			setInterval(function() {
 				$('#reset').trigger('click');
-			},5000);
-	
+			}, 10000);
 			
 			
-			
-			
-			function ajaxData(){
+			function ajaxData() {
 				$.ajax({
 					type : "GET",
-					async: true,
-					url : ("https://api.upbit.com/v1/ticker?markets="+coinEngNameList),
+					async : true,
+					url : ("https://api.upbit.com/v1/ticker?markets=" + coinEngNameList),
 					dataType : 'json',
-					success: function (res){
-						var allList = res.splice(0,114)
+					success : function(res) {
+						var allList = res.splice(0, 114);
 						let resultUp;
 						let resultDown;
-						resultUp = allList.sort(function(a,b){
-							return b.signed_change_rate - a.signed_change_rate
+						resultUp = allList.sort(function(a, b) {
+							return b.signed_change_rate- a.signed_change_rate
 						})
-					
-						
+
 						// 각각의  빈리스트 만들기
 						var marketNameList = []; //마켓이름
 						var changeList = []; // 상승하락 보합
 						var prevClosingPriceList = []; // 전일종가
 						var tradePriceList = []; //현재가
-						var changePriceList= []; // 부호가있는변화액
+						var changePriceList = []; // 부호가있는변화액
 						var changeRateList = []; // 부호가있는변화율
 						var accTradePriceOneDayList = [];//24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
-						for(let i=0; i<15; i++){
-							marketNameList.push(resultUp[i].market)
-							changeList.push(resultUp[i].change)
-							prevClosingPriceList.push(resultUp[i].prev_closing_price)
-							tradePriceList.push(resultUp[i].trade_price)
-							changePriceList.push(resultUp[i].signed_change_price	)
-							changeRateList.push(resultUp[i].signed_change_rate)
-							accTradePriceOneDayList.push(resultUp[i].acc_trade_price_24h)
+						
+						for (let i = 0; i < 15; i++) {
+							marketNameList.push(resultUp[i].market); // 종목 구분 코드
+							changeList.push(resultUp[i].change); // EVEN : 보합, RISE : 상승, FALL : 하락
+							prevClosingPriceList.push(resultUp[i].prev_closing_price); // 전일 종가(UTC 0시 기준)
+							tradePriceList.push(resultUp[i].trade_price); // 종가(현재가)
+							changePriceList.push(resultUp[i].signed_change_price); // 부호가 있는 변화액
+							changeRateList.push(resultUp[i].signed_change_rate); // 부호가 있는 변화율
+							accTradePriceOneDayList.push(resultUp[i].acc_trade_price_24h); // 24시간 누적 거래대금
 						}
+
+						let a, b, c, d, e;
 						
-						let a, b, c, d,e ;
-						
-						resultDown = allList.sort(function(a,b){
-							return a.signed_change_rate - b.signed_change_rate
+						resultDown = allList.sort(function(a, b) {
+							return a.signed_change_rate- b.signed_change_rate
 						})
 						var marketNameListDown = []; //마켓이름
 						var changeListDown = []; // 상승하락 보합
@@ -198,69 +197,116 @@
 						var changePriceListDown = []; // 부호가있는변화액
 						var changeRateListDown = []; // 부호가있는변화율
 						var accTradePriceOneDayListDown = [];//24시간 누적 거래대금 // 업비트에서 거래대금으로 나오는 부분
-						for(let i=0; i<20; i++){
-							marketNameListDown.push(resultDown[i].market)
-							changeListDown.push(resultDown[i].change)
-							prevClosingPriceListDown.push(resultDown[i].prev_closing_price)
-							tradePriceListDown.push(resultDown[i].trade_price)
-							changePriceListDown.push(resultDown[i].signed_change_price)
-							changeRateListDown.push(resultDown[i].signed_change_rate)
-							accTradePriceOneDayListDown.push(resultDown[i].acc_trade_price_24h)
+						for (let i = 0; i < 20; i++) {
+							marketNameListDown.push(resultDown[i].market);
+							changeListDown.push(resultDown[i].change);
+							prevClosingPriceListDown.push(resultDown[i].prev_closing_price);
+							tradePriceListDown.push(resultDown[i].trade_price);
+							changePriceListDown.push(resultDown[i].signed_change_price);
+							changeRateListDown.push(resultDown[i].signed_change_rate);
+							accTradePriceOneDayListDown.push(resultDown[i].acc_trade_price_24h);
 						}
-					
-						html='';
-						for(let i=0; i<15; i++){
-							if(changeList[i]=='FALL'){
-								changeList[i] = '하락'
-							}else if(changeList[i] == 'EVEN'){
-								changeList[i] = '보합'
-							}else{
-								changeList[i] = '상승'
-							} 
-							
-							html=
-								  "<tbody id = 'coinUp'><tr><td>" + marketNameList[i] + "</td>"
-								 	+ "<td>" + tradePriceList[i].toLocaleString('ko-kr') + "</td>"
-									+ "<td>" + prevClosingPriceList[i].toLocaleString('ko-kr')+ "</td>"
-									+ "<td>" + changePriceList[i].toLocaleString('ko-kr')+ "</td>"
-									+ "<td>" + (changeRateList[i].toFixed(4)*100).toLocaleString('ko-kr')+"%</td>"
-									+ "<td>" + Math.floor(accTradePriceOneDayList[i]/1000000).toLocaleString('ko-kr') + "백만원</td>"
-									+ "<td>" + changeList[i] + "</td></tr></tbody>"
-							$("#dataMarket").append(html)
-						}
-						htmlDown='';
-						for(let i=0; i<15; i++){
-							if(changeListDown[i]=='FALL'){
-								changeListDown[i] = '하락'
-							}else if(changeListDown[i] == 'EVEN'){
-								changeListDown[i] = '보합'
-							}else{
-								changeList[i] = '상승'
-							} 
-							
-							htmlDown=
-								  "<tbody id = 'coinDown'><tr><td>" + marketNameListDown[i] + "</td>"
-								 	+ "<td>" + tradePriceListDown[i].toLocaleString('ko-kr') + "</td>"
-									+ "<td>" + prevClosingPriceListDown[i].toLocaleString('ko-kr')+ "</td>"
-									+ "<td>" + changePriceListDown[i].toLocaleString('ko-kr')+ "</td>"
-									+ "<td>" + (changeRateListDown[i].toFixed(4)*100).toLocaleString('ko-kr')+"%</td>"
-									+ "<td>" + Math.floor(accTradePriceOneDayListDown[i]/1000000).toLocaleString('ko-kr') + "백만원</td>"
-									+ "<td>" + changeListDown[i] + "</td></tr></tbody>"
-							$("#dataMarketDown").append(htmlDown)
-						}
-						
-						$('#coinUp').empty();
-						$('#coinDown').empty();
-						
-				}
-			
-			})
-		};
-		
-		})
-		
-   /*]]>*/
-</script>
+	
+							html = '';
+							for (let i = 0; i < 15; i++) {
+								if (changeList[i] == 'FALL') {
+									changeList[i] = '하락'
+								} else if (changeList[i] == 'EVEN') {
+									changeList[i] = '보합'
+								} else {
+									changeList[i] = '상승'
+								}
+
+								html = "<tbody id = 'coinUp'><tr><td>"
+										+ marketNameList[i]
+										+ "</td>"
+										+ "<td>"
+										+ tradePriceList[i]
+												.toLocaleString('ko-kr')
+										+ "</td>"
+										+ "<td>"
+										+ prevClosingPriceList[i]
+												.toLocaleString('ko-kr')
+										+ "</td>"
+										+ "<td>"
+										+ changePriceList[i]
+												.toLocaleString('ko-kr')
+										+ "</td>"
+										+ "<td>"
+										+ (changeRateList[i]
+												.toFixed(4) * 100)
+												.toLocaleString('ko-kr')
+										+ "%</td>"
+										+ "<td>"
+										+ Math
+												.floor(
+														accTradePriceOneDayList[i] / 1000000)
+												.toLocaleString(
+														'ko-kr')
+										+ "백만원</td>"
+										+ "<td>"
+										+ changeList[i]
+										+ "</td></tr></tbody>"
+								$("#dataMarket").append(
+										html)
+							}
+							htmlDown = '';
+							for (let i = 0; i < 15; i++) {
+								if (changeListDown[i] == 'FALL') {
+									changeListDown[i] = '하락'
+								} else if (changeListDown[i] == 'EVEN') {
+									changeListDown[i] = '보합'
+								} else {
+									changeList[i] = '상승'
+								}
+
+								htmlDown = "<tbody id = 'coinDown'><tr><td>"
+										+ marketNameListDown[i]
+										+ "</td>"
+										+ "<td>"
+										+ tradePriceListDown[i]
+												.toLocaleString('ko-kr')
+										+ "</td>"
+										+ "<td>"
+										+ prevClosingPriceListDown[i]
+												.toLocaleString('ko-kr')
+										+ "</td>"
+										+ "<td>"
+										+ changePriceListDown[i]
+												.toLocaleString('ko-kr')
+										+ "</td>"
+										+ "<td>"
+										+ (changeRateListDown[i]
+												.toFixed(4) * 100)
+												.toLocaleString('ko-kr')
+										+ "%</td>"
+										+ "<td>"
+										+ Math
+												.floor(
+														accTradePriceOneDayListDown[i] / 1000000)
+												.toLocaleString(
+														'ko-kr')
+										+ "백만원</td>"
+										+ "<td>"
+										+ changeListDown[i]
+										+ "</td></tr></tbody>"
+								$("#dataMarketDown")
+										.append(htmlDown)
+							}
+
+							$('#coinUp').empty();
+							$('#coinDown').empty();
+
+						} // success...end
+
+					})
+		}
+		;
+
+	})
+
+		/*]]>*/
+	</script>
 
 
 </body>

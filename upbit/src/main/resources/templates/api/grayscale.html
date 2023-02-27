@@ -60,7 +60,7 @@
 		<thead>
 			<tr>
 				<th scope="col">코인종류</th>
-				<th scope="col">보유갯수</th>
+				<th scope="col">보유개수</th>
 				<th scope="col">24시간 수량변화</th>
 				<th scope="col">7일 수량변화</th>
 				<th scope="col">30일 수량변화</th>
@@ -109,7 +109,13 @@ $.ajax({
 			type : "GET",
 			url : "https://fapi.coinglass.com/api/grayscaleOpenInterest",
 			success : function(res){
-				var data = Object.values(res)
+				var data = Object.values(res); // 객체의 값들을 배열로 반환하는 함수
+				console.log("[START] data")
+				console.log(data);
+				console.log("[END] data")
+				console.log("[START] data...2")
+				console.log(data[2]);
+				console.log("[END] data...2")
 				var dataList = data[2]
 				var marketName = []; // 이름
 				var openInterest = []; // 보유수량
@@ -187,13 +193,13 @@ $.ajax({
 						marketName[i]="이더리움캐시(ETC)"
 					}
 					html = 
-						  "<tbody><tr><td>" + marketName[i] + "</td>"
-							+ "<td >" + openInterest[i].toFixed(2) +"</td>"
-							+ "<td >" + oIChange[i].toFixed(2) +"</td>"
-							+ "<td >" + d7OIChange[i].toFixed(2) +"</td>"
-							+ "<td >" + d30OIChange[i].toFixed(2) +"</td>"
-							+ "<td >" + closeTime[i] +"</td>"
-							+ "<td>" + updateTime[i] + "</td></tr></tbody>"
+						  "<tbody><tr><td>" + marketName[i] + "</td>"			// 코인 종류
+							+ "<td >" + openInterest[i].toFixed(2) +"</td>"		// 보유 개수
+							+ "<td >" + oIChange[i].toFixed(2) +"</td>"				// 24시간 수량변화
+							+ "<td >" + d7OIChange[i].toFixed(2) +"</td>"		// 7일 수령변화
+							+ "<td >" + d30OIChange[i].toFixed(2) +"</td>"		// 30일 수령변화
+							+ "<td >" + closeTime[i] +"</td>"									// 마감시간
+							+ "<td>" + updateTime[i] + "</td></tr></tbody>"	// 업데이트 시간
 						$("#grayscale").append(html)
 				}
 				

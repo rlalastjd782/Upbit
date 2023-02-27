@@ -14,29 +14,32 @@ import org.springframework.stereotype.Service;
 import com.upbit.inquiry.DTO.MainDTO;
 @Service
 public class MainService {
+	
+	
+	private static final Logger log = LoggerFactory.getLogger(MainService.class);
 
-	private static String naverNews = "https://search.naver.com/search.naver?where=news&query=%EC%BD%94%EC%9D%B8";
+	private static String naverNews = "https://search.naver.com/search.naver?where=news&query=%EC%BD%94%EC%9D%B8"; // 네이버 코인 페이지
 	private static String UpbitNews = "https://upbit.com/trends";
 
 	public List<MainDTO> getNaverNews() throws IOException {
 
-	Logger logger = LoggerFactory.getLogger(MainService.class);
 	List<MainDTO> mainResponseList = new ArrayList<>();	
     Document doc = Jsoup.connect(naverNews).get();
     Elements contents = doc.select(".news_area");
 
     for(Element content : contents) {
     	MainDTO mainResponse =  MainDTO.builder()
-    			.newsPress(content.select(".press").text())
+    			.newsPress(content.select(".press").text()) 
     			.newsTitle(content.select(".news_tit").text())
     			.newsDetail(content.select(".news_dsc").text())
     			.newsLink(content.select(".news_dsc a").attr("href"))
     			.newsinfo(content.select("span").text())
     			.build();
-    			
     	mainResponseList.add(mainResponse);
     }
-
+    log.info("[START] getNaverNews");
+    //System.out.println(mainResponseList);
+    log.info("[END] getNaverNews");
     return mainResponseList;
 	}
 }

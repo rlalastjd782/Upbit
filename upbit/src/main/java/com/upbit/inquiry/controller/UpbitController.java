@@ -1,5 +1,3 @@
-
-
 package com.upbit.inquiry.controller;
 
 import java.io.IOException;
@@ -9,6 +7,8 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,28 +28,33 @@ import com.upbit.inquiry.service.Impl.UpbitServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 
 public class UpbitController {
+
+		
+		private static final Logger log = LoggerFactory.getLogger(UpbitController.class);
 
 	
 		private final UpbitServiceImpl upbitService;
 		private final MainService mainService;
 		private final CoinServiceImpl coinServiceImpl;
 
-		@GetMapping(value = "/")
-		public String mainPage(String news, Model model) throws IOException {
+		@GetMapping(value = "/")// String news, 
+		public String mainPage(Model model) throws IOException {
 		  List<MainDTO> mainResponse = mainService.getNaverNews();
+		  log.info("[START] mainPage");
 		  System.out.println(mainResponse);
+		  //System.out.println(news);
+		  log.info("[END] mainPage");
 		  model.addAttribute("news", mainResponse);
 		  return "api/main";
 			
 		}
 		
 		
-		@GetMapping(value = "/calendar")
+		@GetMapping(value = "/calendar") // 아직 구현되지 않는 기능
 		public String calendarPage(String all,Model model) {
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
 			return "api/calendar";
@@ -100,7 +105,7 @@ public class UpbitController {
 			
 		}
 		
-		@GetMapping(value = "/whale")
+		@GetMapping(value = "/whale") // 아직 미완성
 		public String whalePage(String all,Model model) {
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
 			return "api/whale";
@@ -112,7 +117,6 @@ public class UpbitController {
 		public String grayscalePage(String all,Model model) {
 			model.addAttribute("model",upbitService.getUpbitMarket(all));
 			return "api/grayscale";
-			
 		}
 		
 	

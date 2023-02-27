@@ -4,48 +4,53 @@
 
 	<!-- coinDTO 전체컬럼 -->
 	<sql id="ranking">
-		  korean_name
+		korean_name
 		, candle_date_time_kst
 		, candle_acc_trade_price
 		, trade_price
 		, ranking
 	</sql>
 
-	<!--맨처음화면  -->
-		<!-- 	당일 08시 기준으로 변경 (기준값) 맨처음 들어갔을때의 기준 거래량 순위-->
-	<select id = "rankingSelect" parameterType = "com.upbit.inquiry.DTO.CoinResponse"  resultType = "com.upbit.inquiry.DTO.CoinResponse">
+	<!--맨처음화면 -->
+	<!-- 당일 08시 기준으로 변경 (기준값) 맨처음 들어갔을때의 기준 거래량 순위 -->
+	<select id="rankingSelect"
+		parameterType="com.upbit.inquiry.DTO.CoinResponse"
+		resultType="com.upbit.inquiry.DTO.CoinResponse">
 		SELECT
-			cat.korean_name,
-			cmt.candle_date_time_kst ,
-			cmt.candle_acc_trade_price ,
-			cmt.trade_price 
-			,rank() over(order by candle_acc_trade_price desc) as ranking
+		cat.korean_name,
+		cmt.candle_date_time_kst ,
+		cmt.candle_acc_trade_price ,
+		cmt.trade_price
+		,rank() over(order by candle_acc_trade_price desc) as ranking
 		FROM
-			coin_minutes_table cmt,
-			coin_all_table cat 
+		coin_minutes_table cmt,
+		coin_all_table cat
 		WHERE
-			candle_date_time_kst  = concat( LEFT((replace (DATE_SUB(CURRENT_TIMESTAMP, interval 1 hour), " ", "T")),13),":00:00") and cmt.market = cat.market 
-	</select>
-	
-<!-- 	post 포지션 이후 화면 --> 
-	<!-- 오른쪽 화면 -->
-	<!-- post 포지션 시간 검색하면 검색되게 나옴 -->
-	<select id = "rankingSelect2" parameterType = "com.upbit.inquiry.DTO.CoinRequest"  resultType = "com.upbit.inquiry.DTO.CoinResponse">
-		SELECT
-			cat.korean_name,
-			cmt.candle_date_time_kst ,
-			cmt.candle_acc_trade_price ,
-			cmt.trade_price 
-			,rank() over(order by candle_acc_trade_price desc) as ranking
-		FROM
-			coin_minutes_table cmt,
-			coin_all_table cat 
-		WHERE
-			candle_date_time_kst  = #{candle_date_time_kst} and cmt.market = cat.market 
+		candle_date_time_kst = concat( LEFT((replace (DATE_SUB(CURRENT_TIMESTAMP, interval 1
+		hour), " ", "T")),13),":00:00") and cmt.market = cat.market
 	</select>
 
-	
-	
-	
-	
+	<!-- post 포지션 이후 화면 -->
+	<!-- 오른쪽 화면 -->
+	<!-- post 포지션 시간 검색하면 검색되게 나옴 -->
+	<select id="rankingSelect2"
+		parameterType="com.upbit.inquiry.DTO.CoinRequest"
+		resultType="com.upbit.inquiry.DTO.CoinResponse">
+		SELECT
+		cat.korean_name,
+		cmt.candle_date_time_kst ,
+		cmt.candle_acc_trade_price ,
+		cmt.trade_price
+		,rank() over(order by candle_acc_trade_price desc) as ranking
+		FROM
+		coin_minutes_table cmt,
+		coin_all_table cat
+		WHERE
+		candle_date_time_kst = #{candle_date_time_kst} and cmt.market = cat.market
+	</select>
+
+
+
+
+
 </mapper>

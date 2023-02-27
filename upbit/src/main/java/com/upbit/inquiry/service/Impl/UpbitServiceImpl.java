@@ -2,6 +2,8 @@ package com.upbit.inquiry.service.Impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpbitServiceImpl {
 	
+	private static final Logger log = LoggerFactory.getLogger(UpbitServiceImpl.class);
+
 	private final UpbitFeignClientService upbitFeignClient;
 	private final UpbitAllService upbitAll;
 
@@ -25,6 +29,9 @@ public class UpbitServiceImpl {
 	}
 	
 	public List<UpBitMarketAllDTO> getUpbitMarket(String result2){
+		log.info("[START] getUpbitMarket...UpbitServiceImpl");
+		System.out.println(result2);
+		log.info("[END] getUpbitMarket...UpbitServiceImpl");
 		return upbitAll.getUpBitMarketAll(result2);
 	}
 	

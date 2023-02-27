@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <!-- °øÅë Çìµå-->
+    <!-- ê³µí†µ í—¤ë“œ-->
     <th:block th:replace="/layout/fragments/head :: headFragment"></th:block>
 
     <body id="page-top">
         <div id="wrapper">
-            <!-- »çÀÌµå¹Ù-->
+            <!-- ï¿½ï¿½ï¿½Ìµï¿½ï¿½-->
             <th:block th:replace="/layout/fragments/sidebar :: sidebarFragment"></th:block>
 
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
-                    <!-- »ó´Ü¹Ù-->
+                    <!-- ï¿½ï¿½Ü¹ï¿½-->
                     <th:block th:replace="/layout/fragments/top :: topbarFragment"></th:block>
 
-                    <!-- º»¹®-->
+                    <!-- ï¿½ï¿½ï¿½ï¿½-->
                     <th:block layout:fragment="content"></th:block>
                 </div>
 
-                <!-- °øÅë ÇÏ´Ü-->
+                <!-- ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½-->
                 <th:block th:replace="/layout/fragments/footer :: footerFragment"></th:block>
             </div>
         </div>
 
-        <!-- °øÅë ½ºÅ©¸³Æ®-->
+        <!-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®-->
         <th:block th:replace="/layout/fragments/script :: scriptFragment"></th:block>
     </body>
 </html>
